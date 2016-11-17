@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
 
-devise_for :users, :controllers => { :omniauth_callbacks => "callbacks" }
+devise_for :users, controllers: {omniauth_callbacks: "users/omniauth_callbacks" }
 
 get 'gcales' => 'gcales#index'
 
-get 'gcales/action' => 'gcales#action'
+get 'gcales/init_client' => 'gcales#init_client'
 
 
   # The priority is based upon order of creation: first created -> highest priority.
