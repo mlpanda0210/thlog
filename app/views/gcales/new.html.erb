@@ -1,0 +1,18 @@
+<%= form_for @search, url: gcales_init_client_path(@search), html: {method: "get"} do |f| %>
+
+
+
+<div class="field">
+  <%= f.label :"月選択" %>
+  <%= f.date_select :search_month, {:discard_day => true,:use_month_numbers => true},class: 'form-control' %>
+
+  <div class="field">
+    <%= f.label :search_year %>
+    <%= f.text_field :search_year %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+<% end %>
