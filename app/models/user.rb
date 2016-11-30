@@ -5,11 +5,11 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:google_oauth2]
 
          has_many :tags
+         has_many :schedules
 
 
          def self.find_for_google_oauth2(auth)
              user = User.where(email: auth.info.email).first
-             binding.pry
              unless user
                user = User.create(name:     auth.info.name,
                                   provider: auth.provider,

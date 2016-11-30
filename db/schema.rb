@@ -17,6 +17,9 @@ ActiveRecord::Schema.define(version: 20161120113713) do
   enable_extension "plpgsql"
 
   create_table "schedules", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "tag_id"
+    t.string   "tag"
     t.string   "summary"
     t.string   "description"
     t.datetime "starttime"
@@ -26,13 +29,11 @@ ActiveRecord::Schema.define(version: 20161120113713) do
   end
 
   create_table "tags", force: :cascade do |t|
+    t.string   "tag"
     t.integer  "user_id"
-    t.string   "summary"
-    t.string   "description"
-    t.datetime "starttime"
-    t.datetime "endtime"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "sum_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

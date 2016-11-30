@@ -1,11 +1,10 @@
 class CreateTags < ActiveRecord::Migration
   def change
     create_table :tags do |t|
+      t.string :tag
       t.integer :user_id
-      t.string :summary
-      t.string :description
-      t.timestamp :starttime
-      t.timestamp :endtime
+      t.integer :sum_time
+
 
       t.timestamps null: false
     end
