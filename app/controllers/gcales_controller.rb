@@ -1,5 +1,4 @@
-class GcalesController < ActionController::Base
-
+class GcalesController < ApplicationController
 
  def new
    @search =Form::Search.new
@@ -52,6 +51,7 @@ def init_client
       end
     end
     Schedule.tag_work_time
+    binding.pry
     @schedules_tag = Schedule.all
     @sum_time_tag = Schedule.sum_work_time
   end
@@ -66,6 +66,6 @@ def calc_each_project
       params.require(:form_search).permit(Form::Search::REGISTRABLE_ATTRIBUTES)
     end
     def tags_params
-      params.require(:tag).permit(:id,:tag)
+      params.require(:tag).permit(:tag)
     end
 end

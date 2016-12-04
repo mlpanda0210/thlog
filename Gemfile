@@ -57,7 +57,7 @@ end
 gem 'twitter-bootstrap-rails'
 gem 'jquery-turbolinks'
 gem 'rails_12factor', group: :production
-gem 'devise', github: 'twalpole/devise', branch: 'rails5'  
+gem 'devise', github: 'twalpole/devise', branch: 'rails5'
 gem 'faker'
 gem 'pry-rails'
 ruby '2.3.0'
@@ -84,6 +84,8 @@ gem 'redis', '~> 3.2'
 gem 'thor', '~> 0.19'
 gem 'os', '~> 0.9'
 gem 'rmail', '~> 1.1'
+
+gem 'nested_form'
 
 
 group :development do

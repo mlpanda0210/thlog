@@ -1,19 +1,25 @@
-<%= form_for @search, url: gcales_init_client_path(@search), html: {method: "get"} do |f| %>
 
-<div class="field">
-  <%= f.label :"月選択" %>
-  <%= f.date_select :search_month, {:discard_day => true,:use_month_numbers => true},class: 'form-control' %>
+<div class="container">
+  <div class="wrapper col-md-8 col-md-offset-2 col-sm-10">
+    <%= form_for @search, url: gcales_init_client_path(@search), html: {method: "get"} do |f| %>
+
+    <div class="field">
+      <%= f.label :"月選択" %>
+      <%= f.date_select :search_month, {:discard_day => true,:use_month_numbers => true},class: 'form-control' %>
 
 
-  <div class="field">
-    <%= fields_for(@tag) do |o| %>
-    <%= o.label :"タグ" %>
-    <%= o.text_field :tag %>
+      <div id ="tag-field">
+        <%= fields_for(@tag) do |o| %>
+        <%= o.label :"タグ" %>
+        <%= o.text_field :tag ,class: 'form-control' %>
+      </div>
+      <% end %>
+      <span id="add-tag" class="btn btn-primary">追加</span>
+
+      <div class="actions">
+        <%= f.submit   class: 'btn btn-default btn-sm btn-success' %>
+      </div>
+
+    <% end %>
   </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-
-<% end %>
+<div>
