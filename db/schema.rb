@@ -11,15 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161120113713) do
+ActiveRecord::Schema.define(version: 20161208025349) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "days", force: :cascade do |t|
+    t.integer  "year"
+    t.integer  "month"
+    t.integer  "day_month"
+    t.string   "schedule_summary"
+    t.string   "schedule_description"
+    t.datetime "schedule_starttime"
+    t.datetime "schedule_endtime"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
   create_table "schedules", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "tag_id"
-    t.string   "tag"
     t.string   "summary"
     t.string   "description"
     t.datetime "starttime"
@@ -29,7 +40,7 @@ ActiveRecord::Schema.define(version: 20161120113713) do
   end
 
   create_table "tags", force: :cascade do |t|
-    t.string   "tag"
+    t.string   "name"
     t.integer  "user_id"
     t.integer  "sum_time"
     t.datetime "created_at", null: false

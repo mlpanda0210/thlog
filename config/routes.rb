@@ -9,6 +9,7 @@ get 'gcales/new' => 'gcales#new'
 
 get 'gcales/init_client' => 'gcales#init_client'
 get 'gcales/calc_each_project' => 'gcales#calc_each_project'
+root'gcales#index'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

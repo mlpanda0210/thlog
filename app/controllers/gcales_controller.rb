@@ -1,8 +1,9 @@
 class GcalesController < ApplicationController
+  before_action :authenticate_user!
+
 
  def new
    @search =Form::Search.new
-   @tag = Tag.new
  end
 
  def index
@@ -12,21 +13,19 @@ end
 def init_client
     Schedule.delete_all
     Tag.delete_all
-    @tag = Tag.new(tags_params)
-    @tag.save
+    Tag.add_tags(params[:projects], current_user.id)
+
     client = Google::APIClient.new
     client.authorization.access_token = current_user.token
     client.authorization.client_id = ENV['GOOGLE_CLIENT_ID']
     client.authorization.client_secret = ENV['GOOGLE_CLIENT_SECRET']
     client.authorization.refresh_token = current_user.refresh_token
     service = client.discovered_api('calendar', 'v3')
-
     @responses = client.execute(
     :api_method => service.events.list,
     :parameters => {'calendarId' => 'primary',
       'maxResults' => 2500},
     :headers => {'Content-Type' => 'application/json'})
-
     events = []
     @responses.data.items.each do |item|
       events << item
@@ -37,9 +36,13 @@ def init_client
         next
       end
 
-      year = params["form_search"]["search_month(1i)"]
-      month = params["form_search"]["search_month(2i)"]
-      year_month = year+"-"+month
+
+
+      @year = params["form_search"]["search_month(1i)"]
+      @month = params["form_search"]["search_month(2i)"]
+
+
+      year_month = @year+"-"+@month
       if event["start"]["dateTime"].to_s.include?(year_month)  then
         @schedule_year_month = Schedule.new
         @schedule_year_month.user_id=current_user.id
@@ -51,9 +54,10 @@ def init_client
       end
     end
     Schedule.tag_work_time
-    binding.pry
-    @schedules_tag = Schedule.all
+    @tags = Tag.all
+    @schedules = Schedule.all
     @sum_time_tag = Schedule.sum_work_time
+
   end
 
 
@@ -68,4 +72,5 @@ def calc_each_project
     def tags_params
       params.require(:tag).permit(:tag)
     end
+
 end

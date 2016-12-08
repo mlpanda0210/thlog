@@ -1,0 +1,10 @@
+
+<h1><%= @year %>年<%= @month %>月のプロジェクト工数一覧</h1>
+<% @tags.each do |tag| %>
+  <h2><%= tag.name %></h2>
+  <% @schedules.where(tag_id: tag.id).each do |s| %>
+  <p>予定名：　<%= s.summary %></p>
+  <p>時間：　　<%= s.starttime %>　〜　<%= s.endtime %></p>
+  <br>
+  <% end %>
+<% end %>

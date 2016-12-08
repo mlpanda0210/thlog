@@ -1,6 +1,6 @@
 
 $(function() {
   $('#add-tag').click(function() {
-    $('#tag-field').append('<input type="text" name="tag[tag]" id="tag_tag" class="form-control"/>');
+    $('#tag-field').append('<input type="text" name="projects[]" id="projects_" class="form-control"/>');
   });
 });
