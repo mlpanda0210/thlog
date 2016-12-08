@@ -3,7 +3,7 @@ class Schedule < ActiveRecord::Base
   belongs_to :tag
   belongs_to :day
 
-  def self.tag_work_time
+  def self.add_tag_id
     tags = Tag.all
     tags.each do |tag|
      schedules = Schedule.where("summary like '%"+tag.name+"%'")
@@ -25,4 +25,16 @@ class Schedule < ActiveRecord::Base
      tag.sum_time = sum
      end
    end
+
+   def self.add_day_id
+     schedules = Schedule.all
+     days = Day.all
+     days.each do |day|
+       schedules = Schedule.where(year: day.year, month: day.month, day_month: day.day_month)
+       schedules.update_all(day_id: day.id)
+     end
+
+   end
+
+
 end

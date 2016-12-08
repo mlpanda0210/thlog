@@ -13,7 +13,14 @@ end
 def init_client
     Schedule.delete_all
     Tag.delete_all
+    Day.delete_all
     Tag.add_tags(params[:projects], current_user.id)
+    @year = params["form_search"]["search_month(1i)"]
+    @month = params["form_search"]["search_month(2i)"]
+    year_month = @year+"-"+@month
+
+    Day.make_days_database(@year,@month,current_user.id)
+
 
     client = Google::APIClient.new
     client.authorization.access_token = current_user.token
@@ -36,13 +43,6 @@ def init_client
         next
       end
 
-
-
-      @year = params["form_search"]["search_month(1i)"]
-      @month = params["form_search"]["search_month(2i)"]
-
-
-      year_month = @year+"-"+@month
       if event["start"]["dateTime"].to_s.include?(year_month)  then
         @schedule_year_month = Schedule.new
         @schedule_year_month.user_id=current_user.id
@@ -50,10 +50,15 @@ def init_client
         @schedule_year_month.description = event["description"]
         @schedule_year_month.starttime = event["start"]["dateTime"]
         @schedule_year_month.endtime = event["end"]["dateTime"]
+        @schedule_year_month.year = @year
+        @schedule_year_month.month = @month
+        @schedule_year_month.day_month = event["start"]["dateTime"].day.to_i
         @schedule_year_month.save
       end
     end
-    Schedule.tag_work_time
+
+    Schedule.add_tag_id
+    Schedule.add_day_id
     @tags = Tag.all
     @schedules = Schedule.all
     @sum_time_tag = Schedule.sum_work_time

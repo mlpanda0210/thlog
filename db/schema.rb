@@ -31,10 +31,14 @@ ActiveRecord::Schema.define(version: 20161208025349) do
   create_table "schedules", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "tag_id"
+    t.integer  "day_id"
     t.string   "summary"
     t.string   "description"
     t.datetime "starttime"
     t.datetime "endtime"
+    t.integer  "year"
+    t.integer  "month"
+    t.integer  "day_month"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
