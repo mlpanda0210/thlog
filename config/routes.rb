@@ -7,8 +7,10 @@ devise_for :users, controllers: {
 get 'gcales' => 'gcales#index'
 get 'gcales/new' => 'gcales#new'
 
+get 'gcales/edit_tag' => 'gcales#edit_tag'
+get 'gcales/update_tag' => 'gcales#update_tag'
 get 'gcales/init_client' => 'gcales#init_client'
-get 'gcales/calc_each_project' => 'gcales#calc_each_project'
+get 'gcales/day' => 'gcales#day'
 root'gcales#index'
 
 

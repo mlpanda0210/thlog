@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="wrapper col-md-8 col-md-offset-2 col-sm-10">
+    <p>登録タグ：</p>
+    <% @tags.each do |tag| %>
+      <%= form_for(tag ,url: gcales_path) do |f| %>
+      <%= f.collection_select :name,Tag.all,:name, :name, class:"form-control" %>
+      <% end %>
+    <% end %>
+    <div id ="tag-field">
+        <span id="add-tag" class="btn btn-primary">追加</span>
+    </div>
+
+    <div class="actions">
+      <%= link_to '登録する/更新する',gcales_update_tag_path %>
+    </div>
+
+  </div>
+<div>

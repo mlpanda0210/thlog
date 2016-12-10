@@ -7,6 +7,7 @@ class GcalesController < ApplicationController
  end
 
  def index
+   @tags = Tag.all
 
 end
 
@@ -53,6 +54,7 @@ def init_client
         @schedule_year_month.year = @year
         @schedule_year_month.month = @month
         @schedule_year_month.day_month = event["start"]["dateTime"].day.to_i
+        @schedule_year_month.spendtime = (@schedule_year_month.endtime-@schedule_year_month.starttime)/3600
         @schedule_year_month.save
       end
     end
@@ -67,15 +69,27 @@ def init_client
 
 
 
-def calc_each_project
-  end
+ def day
+  @tags = Tag.all
+  @days = Day.all
+  @schedules = Schedule.all
+ end
+
+ def edit_tag
+  @tags = Tag.all
+ end
+
+ def update_tag
+   binding.pry
+ end
+
 
   private
     def searches_params
       params.require(:form_search).permit(Form::Search::REGISTRABLE_ATTRIBUTES)
     end
     def tags_params
-      params.require(:tag).permit(:tag)
+      params.require(:tag).permit(:name)
     end
 
 end

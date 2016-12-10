@@ -11,8 +11,6 @@ class Schedule < ActiveRecord::Base
     end
   end
 
-
-
    def self.sum_work_time
      tags = Tag.all
      tags.each do |tag|

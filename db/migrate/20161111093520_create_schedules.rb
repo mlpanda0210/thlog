@@ -8,9 +8,11 @@ class CreateSchedules < ActiveRecord::Migration
       t.string :description
       t.timestamp :starttime
       t.timestamp :endtime
+      t.float :spendtime
       t.integer :year
       t.integer :month
       t.integer :day_month
+
 
       t.timestamps null: false
     end

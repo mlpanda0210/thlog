@@ -1,0 +1,10 @@
+
+<% @days.each do |day| %>
+<h2><%= day.year %>年<%= day.month %>月<%= day.day_month %>日</h2>
+<% @schedules.where(year: day.year , month: day.month, day_month: day.day_month).each do |s| %>
+ <p>予定名：　<%= s.summary %></p>
+ <p>所用時間：　<%= s.spendtime %>時間</p>
+ <p>時間：　　<%= s.starttime %>　〜　<%= s.endtime %></p>
+ <br>
+ <% end %>
+<% end %>

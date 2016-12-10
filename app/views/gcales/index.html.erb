@@ -1,0 +1,9 @@
+
+<p><%= image_tag(current_user.picture) %></p>
+<p>ユーザー名：<%= current_user.name %></p>
+<p>アドレス：<%= current_user.email %></p>
+<p>登録タグ：</p>
+<% @tags.each do |tag| %>
+<p><%= tag.name %></p>
+<% end %>
+<%= link_to 'タグを登録/編集する' ,gcales_edit_tag_path %>
