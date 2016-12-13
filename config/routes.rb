@@ -7,6 +7,11 @@ devise_for :users, controllers: {
 get 'gcales' => 'gcales#index'
 get 'gcales/new' => 'gcales#new'
 
+
+delete 'gcales' => 'gcales#destroy_tag'
+get 'gcales/new_tag' => 'gcales#new_tag'
+get 'gcales/create_tag' => 'gcales#create_tag'
+post 'gcales/create_tag' => 'gcales#create_tag'
 get 'gcales/edit_tag' => 'gcales#edit_tag'
 get 'gcales/update_tag' => 'gcales#update_tag'
 get 'gcales/init_client' => 'gcales#init_client'

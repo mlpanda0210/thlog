@@ -4,6 +4,9 @@
 <p>アドレス：<%= current_user.email %></p>
 <p>登録タグ：</p>
 <% @tags.each do |tag| %>
-<p><%= tag.name %></p>
+<p><%= tag.name %>
+<%= link_to "削除", gcales_path(:id => tag.id), method: :delete, data: { confirm: '本当に削除していいですか？'}, class: 'btn btn-default btn-sm btn btn-danger' %>
+</p>
+
 <% end %>
-<%= link_to 'タグを登録/編集する' ,gcales_edit_tag_path %>
+<%= link_to 'タグを登録/編集する' ,gcales_new_tag_path %>

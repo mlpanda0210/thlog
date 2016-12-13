@@ -4,60 +4,53 @@ class GcalesController < ApplicationController
 
  def new
    @search =Form::Search.new
+   @tags = Tag.all
  end
 
- def index
-   @tags = Tag.all
 
+ def index
+   Schedule.delete_all
+   client = Google::APIClient.new
+   client.authorization.access_token = current_user.token
+   client.authorization.client_id = ENV['GOOGLE_CLIENT_ID']
+   client.authorization.client_secret = ENV['GOOGLE_CLIENT_SECRET']
+   client.authorization.refresh_token = current_user.refresh_token
+   service = client.discovered_api('calendar', 'v3')
+   @responses = client.execute(
+   :api_method => service.events.list,
+   :parameters => {'calendarId' => 'primary',
+     'maxResults' => 2500},
+   :headers => {'Content-Type' => 'application/json'})
+   events = []
+   @responses.data.items.each do |item|
+     events << item
+   end
+
+   events.each do |event|
+     if event.summary.nil? || event["start"]["dateTime"].nil? then
+       next
+     end
+       @schedule_year_month = Schedule.new
+       @schedule_year_month.user_id=current_user.id
+       @schedule_year_month.summary = event["summary"]
+       @schedule_year_month.description = event["description"]
+       @schedule_year_month.starttime = event["start"]["dateTime"]
+       @schedule_year_month.endtime = event["end"]["dateTime"]
+       @schedule_year_month.year = event["start"]["dateTime"].year.to_i
+       @schedule_year_month.month = event["start"]["dateTime"].month.to_i
+       @schedule_year_month.day_month = event["start"]["dateTime"].day.to_i
+       @schedule_year_month.spendtime = (@schedule_year_month.endtime-@schedule_year_month.starttime)/3600
+       @schedule_year_month.save
+   end
+   @tags = Tag.all
 end
 
 def init_client
-    Schedule.delete_all
-    Tag.delete_all
     Day.delete_all
-    Tag.add_tags(params[:projects], current_user.id)
     @year = params["form_search"]["search_month(1i)"]
     @month = params["form_search"]["search_month(2i)"]
     year_month = @year+"-"+@month
-
     Day.make_days_database(@year,@month,current_user.id)
-
-
-    client = Google::APIClient.new
-    client.authorization.access_token = current_user.token
-    client.authorization.client_id = ENV['GOOGLE_CLIENT_ID']
-    client.authorization.client_secret = ENV['GOOGLE_CLIENT_SECRET']
-    client.authorization.refresh_token = current_user.refresh_token
-    service = client.discovered_api('calendar', 'v3')
-    @responses = client.execute(
-    :api_method => service.events.list,
-    :parameters => {'calendarId' => 'primary',
-      'maxResults' => 2500},
-    :headers => {'Content-Type' => 'application/json'})
-    events = []
-    @responses.data.items.each do |item|
-      events << item
-    end
-
-    events.each do |event|
-      if event.summary.nil? || event["start"]["dateTime"].nil? then
-        next
-      end
-
-      if event["start"]["dateTime"].to_s.include?(year_month)  then
-        @schedule_year_month = Schedule.new
-        @schedule_year_month.user_id=current_user.id
-        @schedule_year_month.summary = event["summary"]
-        @schedule_year_month.description = event["description"]
-        @schedule_year_month.starttime = event["start"]["dateTime"]
-        @schedule_year_month.endtime = event["end"]["dateTime"]
-        @schedule_year_month.year = @year
-        @schedule_year_month.month = @month
-        @schedule_year_month.day_month = event["start"]["dateTime"].day.to_i
-        @schedule_year_month.spendtime = (@schedule_year_month.endtime-@schedule_year_month.starttime)/3600
-        @schedule_year_month.save
-      end
-    end
 
     Schedule.add_tag_id
     Schedule.add_day_id
@@ -68,19 +61,33 @@ def init_client
   end
 
 
-
  def day
   @tags = Tag.all
   @days = Day.all
   @schedules = Schedule.all
  end
 
+ def new_tag
+   @tag = Tag.new
+ end
+
+ def create_tag
+   Tag.add_tags(params[:projects], current_user.id)
+   redirect_to gcales_path
+ end
+
+ def destroy_tag
+     @tag = Tag.find(params[:id])
+     @tag.destroy
+     redirect_to gcales_path
+ end
+
+
  def edit_tag
   @tags = Tag.all
  end
 
  def update_tag
-   binding.pry
  end
 
 
