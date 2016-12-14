@@ -51,13 +51,23 @@ def init_client
     @month = params["form_search"]["search_month(2i)"]
     year_month = @year+"-"+@month
     Day.make_days_database(@year,@month,current_user.id)
-
-    Schedule.add_tag_id
-    Schedule.add_day_id
+    @schedules =  Schedule.where(year: @year,month: @month)
+    @schedules.add_tag_id
+    @schedules.add_day_id
     @tags = Tag.all
-    @schedules = Schedule.all
-    @sum_time_tag = Schedule.sum_work_time
+    @sum_time_tag = @schedules.sum_work_time
 
+    total_array=[]
+
+    @sum_time_tag.each do |s|
+      array=[s.name,s.sum_time]
+      total_array.push(array)
+    end
+
+    @graph = LazyHighCharts::HighChart.new('graph') do |f|
+      f.title(text: '円グラフ')
+      f.series(name: 'プロジェクト別工数', data: total_array, type: 'pie')
+    end
   end
 
 

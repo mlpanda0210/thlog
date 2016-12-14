@@ -87,6 +87,8 @@ gem 'rmail', '~> 1.1'
 
 gem 'nested_form'
 
+gem 'lazy_high_charts'
+
 
 group :development do
 gem 'letter_opener_web'
