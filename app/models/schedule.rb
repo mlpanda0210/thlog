@@ -4,18 +4,25 @@ class Schedule < ActiveRecord::Base
   belongs_to :day
 
   def self.add_tag_id
-    tags = Tag.all
+    tags = Tag.where.not(name:["other"])
     tags.each do |tag|
-     schedules = Schedule.where("summary like '%"+tag.name+"%'")
+     schedules = self.where("summary like '%"+tag.name+"%'")
      schedules.update_all(tag_id: tag.id)
-    end
-  end
+   end
+   schedules = self.all
+   schedules.each do |s|
+     if s.tag_id == nil
+       s.tag_id = Tag.find_by(name:"other").id
+       s.save
+     end
+   end
+ end
 
    def self.sum_work_time
      tags = Tag.all
      tags.each do |tag|
       sum = 0
-      schedules = Schedule.where("summary like '%"+tag.name+"%'")
+      schedules = Schedule.where(tag_id: tag.id)
        schedules.each do |schedule|
         work_hours = (schedule.endtime-schedule.starttime)/3600
         sum += work_hours.to_i

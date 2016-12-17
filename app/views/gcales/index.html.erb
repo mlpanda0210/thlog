@@ -5,9 +5,9 @@
 <p>登録タグ：</p>
 
 <%= link_to "スケジュールを更新する", gcales_update_schedule_path %>
-
+<p><%= "タグネーム  " %><%= "タグの説明" %></p>
 <% @tags.each do |tag| %>
-<p><%= tag.name %>
+<p><%= tag.name %><%= tag.description %>
 <%= link_to "削除", gcales_path(:id => tag.id), method: :delete, data: { confirm: '本当に削除していいですか？'}, class: 'btn btn-default btn-sm btn btn-danger' %>
 </p>
 <% end %>

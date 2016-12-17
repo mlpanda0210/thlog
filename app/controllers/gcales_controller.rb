@@ -51,7 +51,7 @@ def init_client
 
     Day.delete_all
     @graph=[]
-    for num in 0..13 do
+    for num in 0..60 do
       @year = (Date.today << num).year
       @month = (Date.today << num).month
 
@@ -75,7 +75,6 @@ def init_client
 
       @graph.push(graph)
     end
-    binding.pry
   end
 
 
@@ -90,7 +89,8 @@ def init_client
  end
 
  def create_tag
-   Tag.add_tags(params[:projects], current_user.id)
+   binding.pry
+   Tag.add_tags(params[:projects_name], params[:projects_description], current_user.id)
    redirect_to gcales_path
  end
 
