@@ -6,5 +6,7 @@ class Tag < ActiveRecord::Base
    projects.each do |project|
      self.create(name: project, user_id: user_id)
    end
+
+   self.find_or_create_by(name: "other", user_id: user_id)
+  end
  end
-end

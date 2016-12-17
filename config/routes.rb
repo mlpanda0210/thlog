@@ -6,6 +6,7 @@ devise_for :users, controllers: {
 
 get 'gcales' => 'gcales#index'
 get 'gcales/new' => 'gcales#new'
+get 'gcales/update_schedule' => 'gcales#update_schedule'
 
 
 delete 'gcales' => 'gcales#destroy_tag'
