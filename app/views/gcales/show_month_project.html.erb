@@ -1,10 +1,3 @@
-
-
-<% @graph.each do |graph| %>
-
-<%= high_chart(graph.options[:title][:text], graph) %>
-<% end %>
-
 <h1><%= @year %>年<%= @month %>月のプロジェクト工数一覧</h1>
 <% @tags.each do |tag| %>
   <h2><%= tag.name %></h2>

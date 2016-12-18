@@ -47,8 +47,7 @@ end
    @tags = Tag.where.not(name:["other"])
 end
 
-def init_client
-
+def index_month_project
     Day.delete_all
     @graph=[]
     for num in 0..60 do
@@ -76,6 +75,19 @@ def init_client
       @graph.push(graph)
     end
   end
+
+def show_month_project
+  year_month = params[:graph]
+  year_month = year_month.delete("月")
+  year_month = year_month.split("年")
+
+  @year = year_month[0]
+  @month = year_month[1]
+
+  @schedules = Schedule.where(year: @year, month: @month)
+  @tags = Tag.all
+end
+
 
 
  def day
