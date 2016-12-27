@@ -9,11 +9,17 @@
 <body>
 
   <header>
-  <% if user_signed_in? %>
-  　<li><%= link_to '月の工数を確認する', gcales_index_month_project_path %></li>
+    <% if admin_signed_in? %>
+    <li><%= link_to 'メンバーの工数を棒グラフで確認する', admin_admin_comparison_working_time_path %></li>
+    <li><%= link_to 'メンバーの工数を円グラフで確認する', admin_admin_comparison_project_path %></li>
+    <li><%= link_to 'ログアウト', destroy_admin_session_path, method: :delete %></li>
+  <% elsif user_signed_in? %>
+    <li><%= link_to 'Home', gcales_path %></li>
+  　<li><%= link_to '工数を円グラフで確認する', gcales_index_month_project_path %></li>
     <li><%= link_to 'ログアウト', destroy_user_session_path, method: :delete %></li>
   <% else %>
     <li><%= link_to 'ログイン', new_user_session_path  %></li>
+    <li><%= link_to '管理者用ログイン', new_admin_session_path  %></li>
   <% end %>
   </header>
 
