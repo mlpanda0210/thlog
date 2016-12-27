@@ -8,7 +8,7 @@ class GcalesController < ApplicationController
  end
 
 def update_schedule
-  Schedule.delete_all
+  Schedule.where(user_id: current_user.id).delete_all
   client = Google::APIClient.new
   client.authorization.access_token = current_user.token
   client.authorization.client_id = ENV['GOOGLE_CLIENT_ID']
@@ -44,26 +44,26 @@ def update_schedule
 end
 
  def index
-   @tags = Tag.where.not(name:["other"])
+   @tags = Tag.where.not(name:["other"]).where(user_id: current_user.id)
 end
 
 def index_month_project
     Day.delete_all
     @graph=[]
-    for num in 0..60 do
+    for num in 0..14 do
       @year = (Date.today << num).year
       @month = (Date.today << num).month
 
-      @schedules =  Schedule.where(year: @year,month: @month)
-      @schedules.add_tag_id
-      @schedules.add_day_id
-      @tags = Tag.all
-      @sum_time_tag = @schedules.sum_work_time
+      @schedules =  Schedule.where(year: @year,month: @month).where(user_id: current_user.id)
+      @schedules.add_tag_id(current_user.id)
+      @schedules.add_day_id(current_user.id)
+      @tags = Tag.all.where(user_id: current_user.id)
+      @sum_time_tag = @schedules.sum_work_time(current_user.id)
 
       total_array=[]
 
       @sum_time_tag.each do |s|
-        array=[s.name,s.sum_time]
+        array=[s.description,s.sum_time]
         total_array.push(array)
       end
 
@@ -84,16 +84,16 @@ def show_month_project
   @year = year_month[0]
   @month = year_month[1]
 
-  @schedules = Schedule.where(year: @year, month: @month)
-  @tags = Tag.all
+  @schedules = Schedule.where(year: @year, month: @month).where(user_id: current_user.id).order(starttime: :asc)
+  @tags = Tag.all.where(user_id: current_user.id).order(created_at: :desc)
 end
 
 
 
  def day
-  @tags = Tag.all
-  @days = Day.all
-  @schedules = Schedule.all
+  @tags = Tag.all.where(user_id: current_user.id)
+  @days = Day.all.where(user_id: current_user.id)
+  @schedules = Schedule.all.where(user_id: current_user.id)
  end
 
  def new_tag
@@ -101,7 +101,6 @@ end
  end
 
  def create_tag
-   binding.pry
    Tag.add_tags(params[:projects_name], params[:projects_description], current_user.id)
    redirect_to gcales_path
  end
@@ -118,6 +117,88 @@ end
  end
 
  def update_tag
+ end
+
+def admin_comparison_working_time
+  @users = User.all
+  @graphs = []
+
+  @users.each do |user|
+    total_hash={}
+    total_array=[]
+    total_sum_time_tag = []
+    total_sum_time_tag2 = []
+    total_array_year_month = []
+    for num in 0..4 do
+      @year = (Date.today << num).year
+      @month = (Date.today << num).month
+      year_month = @year.to_s+'年'+@month.to_s+"月"
+      total_array_year_month.push(year_month)
+      @schedules =  Schedule.where(year: @year,month: @month).where(user_id: user.id)
+      @schedules.add_tag_id(user.id)
+      @schedules.add_day_id(user.id)
+      @tags = Tag.all.where(user_id: user.id)
+      @sum_time_tag = @schedules.sum_work_time(user.id)
+    total_sum_time_tag = total_sum_time_tag + @sum_time_tag
+    total_sum_time_tag2 = total_sum_time_tag.group_by{ |a| a.id}
+    end
+
+    total_sum_time_tag2.each do |t|
+      temp_hash={}
+      temp_array=[]
+      temp_hash[:name] = t[1][0].description
+      t[1].each_with_index do |g,i|
+        temp_array.push(t[1][i].sum_time)
+      end
+      temp_hash[:data]=temp_array
+      total_array.push(temp_hash)
+    end
+
+    graph = LazyHighCharts::HighChart.new('graph') do |f|
+        f.title(text: user.name.to_s+'の工数')
+        total_array.each do |t|
+          f.series(:name=> t[:name], :data=> t[:data])
+        end
+        f.options[:subtitle] = @year.to_s+'年'+@month.to_s+"月for"+user.id.to_s
+        f.xAxis(:categories => total_array_year_month)
+        f.yAxis(:max => 200,:title =>{:text=>"hours"})
+        f.options[:chart][:defaultSeriesType] = "column"
+        f.plot_options({:column=>{:stacking=>"normal"}})
+        f.options[:user] = user
+      end
+      @graphs.push(graph)
+    end
+  end
+
+ def admin_comparison_project
+   @users = User.all
+   @graphs = []
+   @users.each do |user|
+     for num in 0..1 do
+       @year = (Date.today << num).year
+       @month = (Date.today << num).month
+       @schedules =  Schedule.where(year: @year,month: @month).where(user_id: user.id)
+       @schedules.add_tag_id(user.id)
+       @schedules.add_day_id(user.id)
+       @tags = Tag.all.where(user_id: user.id)
+       @sum_time_tag = @schedules.sum_work_time(user.id)
+
+       total_array=[]
+       @sum_time_tag.each do |s|
+         array=[s.description,s.sum_time]
+         total_array.push(array)
+       end
+
+       graph = LazyHighCharts::HighChart.new('graph') do |f|
+
+         f.title(text: @year.to_s+'年'+@month.to_s+"月")
+         f.series(name: 'プロジェクト別工数', data: total_array, type: 'pie')
+         f.options[:subtitle] = @year.to_s+'年'+@month.to_s+"月for"+user.id.to_s
+         f.options[:user] = user
+       end
+          @graphs.push(graph)
+     end
+   end
  end
 
 

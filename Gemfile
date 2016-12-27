@@ -64,6 +64,7 @@ ruby '2.3.0'
 gem 'therubyracer', platforms: :ruby
 gem 'rails_admin'
 gem 'cancan'
+gem 'cancancan'
 
 gem 'omniauth'
 gem 'omniauth-twitter'
@@ -73,6 +74,7 @@ gem 'carrierwave'
 gem 'rmagick'
 gem 'dotenv-rails'
 gem 'dotenv'
+
 
 gem 'google-api-client','0.8.2',  require:'google/api_client'
 gem 'omniauth-google-oauth2'
