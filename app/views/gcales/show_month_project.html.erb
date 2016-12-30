@@ -1,3 +1,5 @@
+<p><%= link_to image_tag(@user.picture), gcales_path %></p>
+<p>ユーザー：<%= @user.name %></p>
 <h1><%= @year %>年<%= @month %>月のプロジェクト工数一覧</h1>
 <% @tags.each do |tag| %>
   <h2><%= tag.description %></h2>

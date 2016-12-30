@@ -11,9 +11,6 @@ get 'gcales' => 'gcales#index'
 get 'gcales/new' => 'gcales#new'
 get 'gcales/update_schedule' => 'gcales#update_schedule'
 
-get 'gcales/admin_comparison_project' => 'gcales#admin_comparison_project'
-get 'gcales/admin_comparison_working_time' => 'gcales#admin_comparison_working_time'
-
 get 'admin/admin_comparison_project' => 'admin#admin_comparison_project'
 get 'admin/admin_comparison_working_time' => 'admin#admin_comparison_working_time'
 
@@ -25,6 +22,7 @@ get 'gcales/edit_tag' => 'gcales#edit_tag'
 get 'gcales/update_tag' => 'gcales#update_tag'
 get 'gcales/index_month_project' => 'gcales#index_month_project'
 get 'gcales/show_month_project' => 'gcales#show_month_project'
+get 'gcales/index_month_working_hours' => 'gcales#index_month_working_hours'
 get 'gcales/day' => 'gcales#day'
 root'gcales#index'
 

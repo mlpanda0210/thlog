@@ -15,6 +15,7 @@
     <li><%= link_to 'ログアウト', destroy_admin_session_path, method: :delete %></li>
   <% elsif user_signed_in? %>
     <li><%= link_to 'Home', gcales_path %></li>
+    <li><%= link_to '工数を棒グラフで確認する', gcales_index_month_working_hours_path %></li>
   　<li><%= link_to '工数を円グラフで確認する', gcales_index_month_project_path %></li>
     <li><%= link_to 'ログアウト', destroy_user_session_path, method: :delete %></li>
   <% else %>

@@ -1,5 +1,7 @@
 
 
+<p><%= link_to image_tag(@user.picture), gcales_path %></p>
+<p>ユーザー：<%= @user.name %></p>
 <% @graph.each do |graph| %>
 
 <%= link_to high_chart(graph.options[:title][:text], graph) ,gcales_show_month_project_path(graph: graph.options[:title][:text]) %>

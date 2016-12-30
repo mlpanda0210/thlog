@@ -1,6 +1,6 @@
 class AdminController < ApplicationController
   before_action :authenticate_admin!
-  
+
   def admin_comparison_working_time
     @users = User.all
     @graphs = []
