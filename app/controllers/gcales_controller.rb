@@ -51,10 +51,9 @@ def index_month_project
     Day.delete_all
     @graph=[]
     @user = current_user
-    for num in 0..14 do
+    for num in 1..15 do
       @year = (Date.today << num).year
       @month = (Date.today << num).month
-
       @schedules =  Schedule.where(year: @year,month: @month).where(user_id: current_user.id)
       @schedules.add_tag_id(current_user.id)
       @schedules.add_day_id(current_user.id)
@@ -96,7 +95,7 @@ def index_month_working_hours
     total_sum_time_tag = []
     total_sum_time_tag2 = []
     total_array_year_month = []
-    for num in 0..4 do
+    for num in 1..5 do
       @year = (Date.today << num).year
       @month = (Date.today << num).month
       year_month = @year.to_s+'年'+@month.to_s+"月"

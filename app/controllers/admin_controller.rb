@@ -11,7 +11,7 @@ class AdminController < ApplicationController
       total_sum_time_tag = []
       total_sum_time_tag2 = []
       total_array_year_month = []
-      for num in 0..4 do
+      for num in 1..5 do
         @year = (Date.today << num).year
         @month = (Date.today << num).month
         year_month = @year.to_s+'年'+@month.to_s+"月"
@@ -56,7 +56,7 @@ class AdminController < ApplicationController
      @users = User.all
      @graphs = []
      @users.each do |user|
-       for num in 0..1 do
+       for num in 1..2 do
          @year = (Date.today << num).year
          @month = (Date.today << num).month
          @schedules =  Schedule.where(year: @year,month: @month).where(user_id: user.id)
