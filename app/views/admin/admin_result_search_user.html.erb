@@ -1,0 +1,11 @@
+<% @users.each do |user|%>
+<p><%= image_tag(user.picture) %></p>
+<p>ユーザー名：<%= user.name %></p>
+<p>アドレス：<%= user.email %></p>
+<br>
+<p>登録タグ：</p>
+<p><%= "タグネーム  " %><%= "タグの説明" %></p>
+<% user.tags.each do |tag|%>
+<p><%= tag.name %><%= tag.description %></p>
+<% end %>
+<% end %>

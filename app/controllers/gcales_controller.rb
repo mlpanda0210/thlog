@@ -1,13 +1,12 @@
 class GcalesController < ApplicationController
   before_action :authenticate_user!
 
-
- def new
+  def new
    @search =Form::Search.new
    @tags = Tag.all
  end
 
-def update_schedule
+ def update_schedule
   Schedule.where(user_id: current_user.id).delete_all
   client = Google::APIClient.new
   client.authorization.access_token = current_user.token
@@ -39,37 +38,35 @@ def update_schedule
       @schedule_year_month.day_month = event["start"]["dateTime"].day.to_i
       @schedule_year_month.spendtime = (@schedule_year_month.endtime-@schedule_year_month.starttime)/3600
       @schedule_year_month.save
+    end
+    redirect_to gcales_path
   end
-  redirect_to gcales_path
-end
 
- def index
-   @tags = Tag.where.not(name:["other"]).where(user_id: current_user.id)
-end
+  def index
+    @tags = Tag.where.not(name:["other"]).where(user_id: current_user.id).order(created_at: :desc)
+  end
 
-def index_month_project
+  def index_month_project
     Day.delete_all
     @graph=[]
     @user = current_user
-    for num in 1..15 do
+    for num in 1..10 do
       @year = (Date.today << num).year
       @month = (Date.today << num).month
       @schedules =  Schedule.where(year: @year,month: @month).where(user_id: current_user.id)
       @schedules.add_tag_id(current_user.id)
       @schedules.add_day_id(current_user.id)
       @tags = Tag.all.where(user_id: current_user.id)
-      @sum_time_tag = @schedules.sum_work_time(current_user.id)
-
+      @sum_time_tag = @schedules.month_sum_work_time(current_user.id)
       total_array=[]
-
       @sum_time_tag.each do |s|
         array=[s.description,s.sum_time]
         total_array.push(array)
       end
-
       graph = LazyHighCharts::HighChart.new('graph') do |f|
         f.title(text: @year.to_s+'年'+@month.to_s+'月')
-        f.series(name: 'プロジェクト別工数', data: total_array, type: 'pie')
+        f.series(name: 'プロジェクト別工数', data: total_array, type: 'pie', :dataLabels => { :enabled => false })
+        f.plot_options ({:pie=>{showInLegend: true}})
       end
       @graph.push(graph)
     end
@@ -104,7 +101,7 @@ def index_month_working_hours
       @schedules.add_tag_id(current_user.id)
       @schedules.add_day_id(current_user.id)
       @tags = Tag.all.where(user_id: current_user.id)
-      @sum_time_tag = @schedules.sum_work_time(current_user.id)
+      @sum_time_tag = @schedules.month_sum_work_time(current_user.id)
     total_sum_time_tag = total_sum_time_tag + @sum_time_tag
     total_sum_time_tag2 = total_sum_time_tag.group_by{ |a| a.id}
     end
@@ -135,8 +132,6 @@ def index_month_working_hours
       @graphs.push(graph)
   end
 
-
-
  def day
   @tags = Tag.all.where(user_id: current_user.id)
   @days = Day.all.where(user_id: current_user.id)
@@ -153,27 +148,27 @@ def index_month_working_hours
  end
 
  def destroy_tag
-     @tag = Tag.find(params[:id])
-     @tag.destroy
-     redirect_to gcales_path
+   @tag = Tag.find(params[:id])
+   @tag.destroy
+   redirect_to gcales_path
  end
 
-
  def edit_tag
-  @tags = Tag.all
+   @tag = Tag.find(params[:id])
  end
 
  def update_tag
+   @tag = Tag.find(params[:id])
+   @tag.update(tags_params)
+   redirect_to gcales_path,  notice: "タグを編集しました"
  end
 
+ private
+ def searches_params
+   params.require(:form_search).permit(Form::Search::REGISTRABLE_ATTRIBUTES)
+ end
 
-
-  private
-    def searches_params
-      params.require(:form_search).permit(Form::Search::REGISTRABLE_ATTRIBUTES)
-    end
-    def tags_params
-      params.require(:tag).permit(:name)
-    end
-
+ def tags_params
+   params.require(:tag).permit(:name,:description)
+ end
 end

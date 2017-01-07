@@ -18,7 +18,7 @@ class Schedule < ActiveRecord::Base
    end
  end
 
-   def self.sum_work_time(user_id)
+   def self.month_sum_work_time(user_id)
      tags = Tag.all.where(user_id: user_id)
      tags.each do |tag|
       sum = 0
@@ -38,8 +38,5 @@ class Schedule < ActiveRecord::Base
        schedules = Schedule.where(year: day.year, month: day.month, day_month: day.day_month).where(user_id: user_id)
        schedules.update_all(day_id: day.id)
      end
-
    end
-
-
 end

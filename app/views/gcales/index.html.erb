@@ -1,14 +1,13 @@
-
 <p><%= image_tag(current_user.picture) %></p>
 <p>ユーザー名：<%= current_user.name %></p>
 <p>アドレス：<%= current_user.email %></p>
 <p>登録タグ：</p>
-
-<%= link_to "スケジュールを更新する", gcales_update_schedule_path %>
 <p><%= "タグネーム  " %><%= "タグの説明" %></p>
 <% @tags.each do |tag| %>
 <p><%= tag.name %><%= tag.description %>
+<%= link_to "編集", gcales_edit_tag_path(:id => tag.id),class: 'btn btn-default btn-sm btn btn-primary' %>
 <%= link_to "削除", gcales_path(:id => tag.id), method: :delete, data: { confirm: '本当に削除していいですか？'}, class: 'btn btn-default btn-sm btn btn-danger' %>
 </p>
 <% end %>
-<%= link_to 'タグを登録/編集する' ,gcales_new_tag_path %>
+<p><%= link_to 'タグを新規登録する' ,gcales_new_tag_path %></p>
+<p><%= link_to "スケジュールを更新する", gcales_update_schedule_path %></p>

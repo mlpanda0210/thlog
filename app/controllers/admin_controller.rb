@@ -1,10 +1,27 @@
 class AdminController < ApplicationController
   before_action :authenticate_admin!
 
+  def admin_index_user
+    @users = User.all
+    @tags = Tag.where.not(name: "other")
+  end
+
+  def admin_search_user
+    @users = User.all
+    @tags = Tag.where.not(name: "other")
+  end
+
+  def admin_result_search_user
+    @year = params[:input]["yearmonth(1i)"]
+    @month = params[:input]["yearmonth(2i)"]
+    @name = params[:input][:name]
+    @time = params[:input][:time]
+    @users = User.sort_user(@year,@month,@name,@time)
+  end
+
   def admin_comparison_working_time
     @users = User.all
     @graphs = []
-
     @users.each do |user|
       total_hash={}
       total_array=[]
@@ -20,7 +37,7 @@ class AdminController < ApplicationController
         @schedules.add_tag_id(user.id)
         @schedules.add_day_id(user.id)
         @tags = Tag.all.where(user_id: user.id)
-        @sum_time_tag = @schedules.sum_work_time(user.id)
+        @sum_time_tag = @schedules.month_sum_work_time(user.id)
       total_sum_time_tag = total_sum_time_tag + @sum_time_tag
       total_sum_time_tag2 = total_sum_time_tag.group_by{ |a| a.id}
       end
@@ -63,8 +80,7 @@ class AdminController < ApplicationController
          @schedules.add_tag_id(user.id)
          @schedules.add_day_id(user.id)
          @tags = Tag.all.where(user_id: user.id)
-         @sum_time_tag = @schedules.sum_work_time(user.id)
-
+         @sum_time_tag = @schedules.month_sum_work_time(user.id)
          total_array=[]
          @sum_time_tag.each do |s|
            array=[s.description,s.sum_time]
@@ -72,9 +88,9 @@ class AdminController < ApplicationController
          end
 
          graph = LazyHighCharts::HighChart.new('graph') do |f|
-
            f.title(text: @year.to_s+'年'+@month.to_s+"月")
-           f.series(name: 'プロジェクト別工数', data: total_array, type: 'pie')
+           f.series(name: 'プロジェクト別工数', data: total_array, type: 'pie', :dataLabels => { :enabled => false })
+           f.plot_options ({:pie=>{showInLegend: true}})
            f.options[:subtitle] = @year.to_s+'年'+@month.to_s+"月for"+user.id.to_s
            f.options[:user] = user
          end
