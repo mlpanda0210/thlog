@@ -1,7 +1,7 @@
 <p><%= link_to image_tag(@user.picture), gcales_path %></p>
 <p>ユーザー：<%= @user.name %></p>
 <ul>
-  <% @graph.each.with_index(1) do |graph,index| %>
+  <% @graphs.each.with_index(1) do |graph,index| %>
    <% if index<3 %>
      <li class="engraph col-md-6 col-sm-6" style="margin-bottom: 7em;">
        <% if graph %>

@@ -1,0 +1,12 @@
+
+<p><%=@year%>年<%=@month%>月に勤務時間が<%=@time%>時間以上のユーザー一覧</p>
+<br>
+<%= link_to"以下のユーザーにお知らせメールを送る",admin_admin_sendmail_for_users_by_working_time_path(users: @sort_users) %>
+<br>
+<% @sort_users.each do |user|%>
+<p><%= link_to image_tag(user[:picture]), admin_admin_show_user_path(user)%></p>
+<p>ユーザー名：<%= user[:name] %></p>
+<p>アドレス：<%= user[:email] %></p>
+<p>月間工数:<%=user[:total_spend_time]%>時間</p>
+<br>
+<% end %>

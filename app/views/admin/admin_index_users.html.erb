@@ -1,5 +1,7 @@
+
+
 <% @users.each do |user|%>
-<p><%= image_tag(user.picture) %></p>
+<p><%= link_to image_tag(user.picture), admin_admin_show_user_path(id: user.id)%></p>
 <p>ユーザー名：<%= user.name %></p>
 <p>アドレス：<%= user.email %></p>
 <br>

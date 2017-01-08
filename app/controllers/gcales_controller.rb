@@ -48,7 +48,7 @@ class GcalesController < ApplicationController
 
   def index_month_project
     Day.delete_all
-    @graph=[]
+    @graphs=[]
     @user = current_user
     for num in 1..10 do
       @year = (Date.today << num).year
@@ -67,8 +67,10 @@ class GcalesController < ApplicationController
         f.title(text: @year.to_s+'年'+@month.to_s+'月')
         f.series(name: 'プロジェクト別工数', data: total_array, type: 'pie', :dataLabels => { :enabled => false })
         f.plot_options ({:pie=>{showInLegend: true}})
+        f.options[:subtitle] = @year.to_s+'年'+@month.to_s+"月for"+@user.id.to_s
+        f.options[:user] = @user
       end
-      @graph.push(graph)
+      @graphs.push(graph)
     end
   end
 
