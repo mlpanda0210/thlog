@@ -2,11 +2,19 @@
 <p>ユーザー：<%= @user.name %></p>
 <h1><%= @year %>年<%= @month %>月のプロジェクト工数一覧</h1>
 <% @tags.each do |tag| %>
-  <h2><%= tag.description %></h2>
+<div class="table-responsive">
+<table class="table">
+  <tr>
+    <th colspan="3"><%= tag.description %></th>
+  </tr>
   <% @schedules.where(tag_id: tag.id).each do |s| %>
-  <p>予定名：　<%= s.summary %></p>
-  <p>所用時間：　<%= s.spendtime %>時間</p>
-  <p>時間：　　<%= s.starttime %>　〜　<%= s.endtime %></p>
+  <tr>
+  <td>予定名：　<%= s.summary %></td>
+  <td>所用時間：　<%= s.spendtime %>時間</td>
+  <td>時間：　　<%= s.starttime %>　〜　<%= s.endtime %></td>
   <br>
+  </tr>
   <% end %>
+</table>
+</div>
 <% end %>
