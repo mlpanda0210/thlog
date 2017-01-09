@@ -1,6 +1,5 @@
-<p><%= link_to image_tag(@user.picture), gcales_path %></p>
-<p>ユーザー：<%= @user.name %></p>
-<h1><%= @year %>年<%= @month %>月のプロジェクト工数一覧</h1>
+<p><%= link_to image_tag(@user.picture), gcales_path, :class => "profileimg" %></p>
+<h3><%= @year %>年<%= @month %>月のプロジェクト工数一覧</h3>
 <% @tags.each do |tag| %>
 <div class="table-responsive">
 <table class="table">

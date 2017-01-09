@@ -1,5 +1,4 @@
-<p><%= link_to image_tag(@user.picture), gcales_path %></p>
-<p>ユーザー：<%= @user.name %></p>
+<p><%= link_to image_tag(@user.picture), gcales_path, :class => "profileimg" %></p>
 <ul>
   <% @graph.each.with_index(1) do |graph,index| %>
    <% if index<3 %>
