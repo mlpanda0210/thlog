@@ -1,15 +1,41 @@
 
-<%= form_for(:input,url: admin_admin_result_search_user_path) do |f|%>
+<br>
+<p>勤務時間の長いユーザーを検索する</p>
+<%= form_for(:input,url: admin_admin_result_search_user_by_working_time_path) do |f|%>
 <div class="field">
   <p><%= f.label :"対象月を選択" %>
-  <%= f.date_select :yearmonth, {:discard_day => true,:use_month_numbers => true}%></p>
-  <p><%= f.label :"対象プロジェクトを選択" %>
-  <%= f.collection_select :name,@tags.all,:name, :name, class:"form-control" %></p>
+  <%= f.date_select :yearmonth, {:discard_day => true,:use_month_numbers => true,:default => Date.today.last_month,:date_separator => '年'}%>月</p>
   <p><%= f.label :"時間を入力" %>
-  <%= f.number_field :time %></p>
+  <%= f.number_field :time %>時間</p>
+</div>
+<div class="actions">
+  <%= f.submit "検索する" ,class: 'btn btn-default btn-sm btn-success' %>
+</div>
+<% end %>
+<br>
+
+<p>プロジェクト単位で勤務時間の長いユーザーを検索する</p>
+<%= form_for(:input,url: admin_admin_result_search_user_by_project_path) do |f|%>
+<div class="field">
+  <p><%= f.label :"対象月を選択" %>
+  <%= f.date_select :yearmonth, {:discard_day => true,:use_month_numbers => true,:default => Date.today.last_month,:date_separator => '年'}%>月</p>
+  <p><%= f.label :"対象プロジェクトを選択" %>
+  <%= f.collection_select :name,@tags.select(:name).uniq,:name, :name, class:"form-control" %></p>
+  <p><%= f.label :"時間を入力" %>
+  <%= f.number_field :time %>時間</p>
 </div>
 
   <div class="actions">
-    <%= f.submit   class: 'btn btn-default btn-sm btn-success' %>
+    <%= f.submit "検索する" ,class: 'btn btn-default btn-sm btn-success' %>
   </div>
+<% end %>
+
+<br>
+<br>
+<p>対象ユーザー一覧</p>
+<br>
+<% @users.each do |user|%>
+<p><%= image_tag(user.picture) %></p>
+<p>ユーザー名：<%= user.name %></p>
+<p>アドレス：<%= user.email %></p>
 <% end %>

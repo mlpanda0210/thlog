@@ -11,9 +11,15 @@ get 'gcales' => 'gcales#index'
 get 'gcales/new' => 'gcales#new'
 get 'gcales/update_schedule' => 'gcales#update_schedule'
 
-get 'admin/admin_index_user' => 'admin#admin_index_user'
+get 'admin/admin_index_users' => 'admin#admin_index_users'
 get 'admin/admin_search_user' => 'admin#admin_search_user'
-post 'admin/admin_result_search_user' => 'admin#admin_result_search_user'
+post 'admin/admin_result_search_user_by_project' => 'admin#admin_result_search_user_by_project'
+post 'admin/admin_result_search_user_by_working_time' => 'admin#admin_result_search_user_by_working_time'
+get 'admin/admin_show_user' => 'admin#admin_show_user'
+get 'admin/admin_show_month_project' => 'admin#admin_show_month_project'
+
+get 'admin/admin_sendmail_for_users_by_project' => 'admin#admin_sendmail_for_users_by_project'
+get 'admin/admin_sendmail_for_users_by_working_time' => 'admin#admin_sendmail_for_users_by_working_time'
 
 get 'admin/admin_comparison_project' => 'admin#admin_comparison_project'
 get 'admin/admin_comparison_working_time' => 'admin#admin_comparison_working_time'

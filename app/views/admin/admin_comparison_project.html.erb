@@ -4,8 +4,6 @@
 <p><%= image_tag(graph.options[:user][:picture]) %></p>
 <p>ユーザー：<%= graph.options[:user][:name] %></p>
 <% end %>
-
 <% temp_id = graph.options[:user][:id] %>
-
-<%= link_to high_chart(graph.options[:subtitle], graph) ,gcales_show_month_project_path(graph: graph.options[:title][:text]) %>
+<%= link_to high_chart(graph.options[:subtitle], graph) ,admin_admin_show_month_project_path(graph: graph.options[:title][:text],id: temp_id ) %>
 <% end %>
