@@ -1,24 +1,20 @@
-
-
 <div class="container">
   <div class="wrapper col-md-8 col-md-offset-2 col-sm-10">
+    <div class="well">
+      <h4>タグを登録しよう！</h4>
+      <p>Googleカレンダーに予定を登録する際に、タイトルに[タグネーム]を挿入すると、挿入されたタグに対してどのくらい自分が時間をかけたかが集計できます。</p>
+      <p>カレンダーにタグを入力したら、以下のボタンでタグを追加し早速集計してみましょう。</p>
+    </div>
     <%= form_for @tag, url: gcales_create_tag_path, html: {method: "get"} do |f| %>
-
-
       <div id ="tag-field">
-          <span id="add-tag" class="btn btn-primary">タグ追加</span>
+          <span id="add-tag" class="btn btn-primary">新しいタグを追加</span>
       </div>
-
-
       <div id ="tag-field">
-          <span id="delete-tag" class="btn btn-primary">タグ削除</span>
+          <span id="delete-tag" class="btn btn-primary">追加したタグの削除</span>
       </div>
-
-
       <div class="actions">
-        <%= f.submit   class: 'btn btn-default btn-sm btn-success' %>
+        <%= f.submit '追加したタグを登録する', class: 'btn btn-default btn-success' %>
       </div>
-
     <% end %>
   </div>
 <div>

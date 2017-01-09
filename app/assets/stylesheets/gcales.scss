@@ -1,5 +1,38 @@
 table.table th{
   color: #153d73;
   border-left: 3px solid #369;
-  border-bottom: 3px double #369;
+}
+
+td {
+text-align: left;
+vertical-align: top;
+}
+
+.container {
+  text-align: left;
+}
+
+.profile {
+  float: left;
+  margin: 10px 30px 5px 0;
+}
+
+.table-responsive {
+clear: left;
+}
+
+img.profileimg {
+  zoom: 2.0;
+}
+
+.btn {
+  float: left;
+}
+
+.well{
+  margin-top: 10px;
+}
+
+.tag-field{
+  padding-bottom: 5px;
 }
