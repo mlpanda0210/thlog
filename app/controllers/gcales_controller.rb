@@ -146,13 +146,14 @@ def index_month_working_hours
 
  def create_tag
    Tag.add_tags(params[:projects_name], params[:projects_description], current_user.id)
-   redirect_to gcales_path
+   redirect_to gcales_path, notice: "タグを登録しました"
+
  end
 
  def destroy_tag
    @tag = Tag.find(params[:id])
    @tag.destroy
-   redirect_to gcales_path
+   redirect_to gcales_path, notice: "タグを削除しました"
  end
 
  def edit_tag
