@@ -88,7 +88,7 @@ class AdminController < ApplicationController
 
   def admin_search_user
     @users = User.all
-    @tags = Tag.where.not(name: "other")
+    @tags = Tag.all.where.not(name: "other")
   end
 
   def admin_result_search_user_by_project
