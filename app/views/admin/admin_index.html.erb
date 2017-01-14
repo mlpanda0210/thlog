@@ -1,0 +1,32 @@
+<div class="container">
+<div class="profile">
+<p><%= image_tag(current_admin.picture, :class => "profileimg") %></p>
+</div>
+<div class="profile">
+<p>ユーザー名：<br><%= current_admin.name %></p>
+<p>アドレス：<br><%= current_admin.email %></p>
+</div>
+<div class="table-responsive">
+<table class="table">
+<p>登録タグ一覧</p>
+<tr>
+<td><%= "タグネーム" %></td>
+<td><%= "タグの説明" %></td>
+<td colspan="2"></td>
+</tr>
+
+<% @tags.each do |tag| %>
+<tr>
+<td><%= tag.name %></td>
+<td><%= tag.description %></td>
+<td><%= link_to "編集", admin_admin_edit_tag_path(:id => tag.id),class: 'btn btn-default btn-sm btn btn-primary' %></td>
+<td><%= link_to "削除", admin_index_path(:id => tag.id), method: :delete, data: { confirm: '本当に削除していいですか？'}, class: 'btn btn-default btn-sm btn btn-danger' %></td>
+<% end %>
+</tr>
+</table>
+</div>
+<div class="btn">
+<p><%= link_to 'タグを新規登録する' ,admin_admin_new_tag_path, class: 'btn btn-default btn-sm btn-default' %></p>
+<p><%= link_to "メンバーのスケジュールを更新する", admin_admin_update_schedule_path, class: 'btn btn-default btn-sm btn-default' %></p>
+</div>
+</div>

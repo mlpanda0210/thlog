@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     if admin_signed_in?
-      admin_admin_comparison_working_time_path
+      admin_admin_index_path
     else
       gcales_path
     end
