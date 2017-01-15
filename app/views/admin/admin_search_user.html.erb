@@ -1,4 +1,5 @@
-
+<div class="container">
+  <div class="wrapper col-md-8 col-md-offset-2 col-sm-10">
 <br>
 <p>勤務時間の長いユーザーを検索する</p>
 <%= form_for(:input,url: admin_admin_result_search_user_by_working_time_path) do |f|%>
@@ -9,7 +10,7 @@
   <%= f.number_field :time %>時間</p>
 </div>
 <div class="actions">
-  <%= f.submit "検索する" ,class: 'btn btn-default btn-sm btn-success' %>
+  <%= f.submit "検索する" ,class: 'btn btn-default center-block btn-sm btn-success' %>
 </div>
 <% end %>
 <br>
@@ -26,7 +27,7 @@
 </div>
 
   <div class="actions">
-    <%= f.submit "検索する" ,class: 'btn btn-default btn-sm btn-success' %>
+    <%= f.submit "検索する" ,class: 'btn btn-default center-block btn-sm btn-success' %>
   </div>
 <% end %>
 
@@ -35,7 +36,11 @@
 <p>対象ユーザー一覧</p>
 <br>
 <% @users.each do |user|%>
+<div class="target">
 <p><%= image_tag(user.picture) %></p>
 <p>ユーザー名：<%= user.name %></p>
 <p>アドレス：<%= user.email %></p>
+</div>
 <% end %>
+</div>
+</div>

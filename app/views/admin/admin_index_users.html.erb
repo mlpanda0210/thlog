@@ -1,13 +1,28 @@
-
-
+<p><%= notice %></p>
 <% @users.each do |user|%>
+<div class="container" id="users">
+<div class="profile">
 <p><%= link_to image_tag(user.picture), admin_admin_show_user_path(id: user.id)%></p>
+</div>
+<div class="profile">
 <p>ユーザー名：<%= user.name %></p>
 <p>アドレス：<%= user.email %></p>
-<br>
-<p>登録タグ：</p>
-<p><%= "タグネーム  " %><%= "タグの説明" %></p>
+</div>
+
+<div class="table-responsive">
+<table class="table">
+<p class="member">登録タグ一覧</p>
+<tr>
+<td><%= "タグワード" %></td>
+<td><%= "タグの説明" %></td>
+</tr>
 <% user.tags.each do |tag|%>
-<p><%= tag.name %><%= tag.description %></p>
+<tr>
+<td><%= tag.name %></td>
+<td><%= tag.description %></td>
 <% end %>
+</tr>
+</table>
+</div>
+</div>
 <% end %>

@@ -28,9 +28,8 @@
     		</div>
 
     			<ul class="nav nav-tabs nav-justified">
-
     <% if admin_signed_in? %>
-      <li><%= link_to 'ADMIN_INDEX', admin_admin_index_path %></li>
+      <li class="active"><%= link_to 'ADMIN_INDEX', admin_admin_index_path %></li>
       <li><%= link_to 'MEMBERS', admin_admin_index_users_path %></li>
       <li><%= link_to 'MEMBERS SEARCH', admin_admin_search_user_path %></li>
       <li><%= link_to 'MEMBERS WORKING HOURS', admin_admin_comparison_working_time_path %></li>
