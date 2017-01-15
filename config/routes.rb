@@ -13,6 +13,7 @@ get 'gcales/update_schedule' => 'gcales#update_schedule'
 
 get 'admin/admin_index_users' => 'admin#admin_index_users'
 get 'admin/admin_search_user' => 'admin#admin_search_user'
+get 'admin/admin_update_schedule' => 'admin#admin_update_schedule'
 post 'admin/admin_result_search_user_by_project' => 'admin#admin_result_search_user_by_project'
 post 'admin/admin_result_search_user_by_working_time' => 'admin#admin_result_search_user_by_working_time'
 get 'admin/admin_show_user' => 'admin#admin_show_user'
@@ -23,6 +24,18 @@ get 'admin/admin_sendmail_for_users_by_working_time' => 'admin#admin_sendmail_fo
 
 get 'admin/admin_comparison_project' => 'admin#admin_comparison_project'
 get 'admin/admin_comparison_working_time' => 'admin#admin_comparison_working_time'
+get 'admin/admin_custom_comparison_project' => 'admin#admin_custom_comparison_project'
+get 'admin/admin_custom_comparison_working_time' => 'admin#admin_custom_comparison_working_time'
+get 'admin/admin_custom_show_month_project' => 'admin#admin_custom_show_month_project'
+
+get 'admin/admin_index' => 'admin#admin_index'
+delete 'admin/index' => 'admin#admin_destroy_tag'
+get 'admin/admin_new_tag' => 'admin#admin_new_tag'
+get 'admin/admin_create_tag' => 'admin#admin_create_tag'
+post 'admin/admin_create_tag' => 'admin#admin_create_tag'
+get 'admin/admin_edit_tag' => 'admin#admin_edit_tag'
+patch 'admin/admin_update_tag' => 'admin#admin_update_tag'
+
 
 delete 'gcales' => 'gcales#destroy_tag'
 get 'gcales/new_tag' => 'gcales#new_tag'
