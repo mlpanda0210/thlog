@@ -39,7 +39,7 @@ class GcalesController < ApplicationController
       @schedule_year_month.spendtime = (@schedule_year_month.endtime-@schedule_year_month.starttime)/3600
       @schedule_year_month.save
     end
-    redirect_to gcales_path
+    redirect_to gcales_path, notice: "スケジュールを登録しました"
   end
 
   def index

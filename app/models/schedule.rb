@@ -19,7 +19,7 @@ class Schedule < ActiveRecord::Base
  end
 
    def self.month_sum_work_time(user_id)
-     tags = Tag.all.where(user_id: user_id)
+     tags = Tag.all.where(user_id: user_id).order(created_at: :desc)
      tags.each do |tag|
       sum = 0
       schedules = Schedule.where(tag_id: tag.id).where(user_id: user_id)
@@ -31,12 +31,32 @@ class Schedule < ActiveRecord::Base
      end
    end
 
+
+
    def self.add_day_id(user_id)
      schedules = Schedule.all.where(user_id: user_id)
      days = Day.all
      days.each do |day|
        schedules = Schedule.where(year: day.year, month: day.month, day_month: day.day_month).where(user_id: user_id)
        schedules.update_all(day_id: day.id)
+     end
+   end
+
+   def self.copy_user_schedules
+      AdminSchedule.delete_all
+     self.all.find_each do |s|
+       AdminSchedule.create(
+       user_id: s.user_id,
+       day_id: s.day_id,
+       summary: s.summary,
+       description: s.description,
+       starttime: s.starttime,
+       endtime: s.endtime,
+       spendtime: s.spendtime,
+       year: s.year,
+       month: s.month,
+       day_month: s.day_month
+       )
      end
    end
 end

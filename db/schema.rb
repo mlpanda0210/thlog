@@ -11,10 +11,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161227045635) do
+ActiveRecord::Schema.define(version: 20170113074705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "admin_schedules", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "tag_id"
+    t.integer  "day_id"
+    t.string   "summary"
+    t.string   "description"
+    t.datetime "starttime"
+    t.datetime "endtime"
+    t.float    "spendtime"
+    t.integer  "year"
+    t.integer  "month"
+    t.integer  "day_month"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "admin_tags", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "user_id"
+    t.integer  "sum_time"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -29,6 +54,13 @@ ActiveRecord::Schema.define(version: 20161227045635) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "name"
+    t.string   "picture"
+    t.string   "token"
+    t.string   "refresh_token"
+    t.string   "access_token"
   end
 
   add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree

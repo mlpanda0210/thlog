@@ -36,6 +36,7 @@
       <li><%= link_to 'MEMBERS PROJECT MANHOUR RATE', admin_admin_comparison_project_path %></li>
       <li><%= link_to 'CUSTOM MEMBERS WORKING HOURS', admin_admin_custom_comparison_working_time_path %></li>
       <li><%= link_to 'CUSTOM MEMBERS PROJECT MANHOUR RATE', admin_admin_custom_comparison_project_path %></li>
+      <li><%= link_to 'LOGOUT', destroy_admin_session_path, method: :delete %></li>
     <% elsif user_signed_in? %>
       <li class="active"><%= link_to 'MY HOME', gcales_path %></li>
       <li><%= link_to 'WORKING HOURS', gcales_index_month_working_hours_path %></li>
