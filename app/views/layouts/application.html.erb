@@ -28,12 +28,11 @@
     		</div>
 
     			<ul class="nav nav-tabs nav-justified">
-
     <% if admin_signed_in? %>
-      <li><%= link_to 'MEMBERS', admin_admin_index_users_path %></li>
+      <li class="active"><%= link_to 'MEMBERS', admin_admin_index_users_path %></li>
       <li><%= link_to 'MEMBERS SEARCH', admin_admin_search_user_path %></li>
       <li><%= link_to 'MEMBERS WORKING HOURS', admin_admin_comparison_working_time_path %></li>
-      <li><%= link_to 'MEMBERS PROJECT MANHOUR RATE', admin_admin_comparison_project_path %></li>
+      <li><%= link_to 'PROJECT MANHOUR RATE', admin_admin_comparison_project_path %></li>
       <li><%= link_to 'LOGOUT', destroy_admin_session_path, method: :delete %></li>
     <% elsif user_signed_in? %>
       <li class="active"><%= link_to 'MY HOME', gcales_path %></li>
