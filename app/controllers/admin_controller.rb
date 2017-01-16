@@ -71,7 +71,7 @@ class AdminController < ApplicationController
       end
       f.options[:subtitle] = @year.to_s+'年'+@month.to_s+"月for"+@user.id.to_s
       f.xAxis(:categories => total_array_year_month)
-      f.yAxis(:max => 200,:title =>{:text=>"hours"})
+      f.yAxis(:max => 50,:title =>{:text=>"hours"})
       f.options[:chart][:defaultSeriesType] = "column"
       f.plot_options({:column=>{:stacking=>"normal"}})
       f.options[:user] = @user
@@ -93,7 +93,10 @@ class AdminController < ApplicationController
 
   def admin_search_user
     @users = User.all
-    @tags = Tag.all.where.not(name: "other")
+    tags = Tag.all.where.not(name: "other")
+    admin_tags = AdminTag.all.where.not(name: "other")
+    @grouped_all_tags = (tags.select(:name).uniq + admin_tags.select(:name).uniq)
+    temp = (@grouped_all_tags.group_by { |tag| tag.name }).keys.sort {|a,b| a<=>b}
   end
 
   def admin_result_search_user_by_project
@@ -101,7 +104,11 @@ class AdminController < ApplicationController
     @month = params[:input]["yearmonth(2i)"]
     @name = params[:input][:name]
     @time = params[:input][:time]
-    @sort_users = User.sort_user_by_project(@year,@month,@name,@time)
+    if Tag.exists?(name: @name)
+      @sort_users = User.sort_user_by_project(@year,@month,@name,@time)
+    else
+      @sort_users = Admin.sort_user_by_project(@year,@month,@name,@time,current_admin.id)
+    end
   end
 
   def admin_result_search_user_by_working_time
@@ -166,7 +173,7 @@ class AdminController < ApplicationController
           end
           f.options[:subtitle] = @year.to_s+'年'+@month.to_s+"月for"+user.id.to_s
           f.xAxis(:categories => total_array_year_month)
-          f.yAxis(:max => 200,:title =>{:text=>"hours"})
+          f.yAxis(:max => 50,:title =>{:text=>"hours"})
           f.options[:chart][:defaultSeriesType] = "column"
           f.plot_options({:column=>{:stacking=>"normal"}})
           f.options[:user] = user
@@ -276,7 +283,7 @@ class AdminController < ApplicationController
            end
            f.options[:subtitle] = @year.to_s+'年'+@month.to_s+"月for"+user.id.to_s
            f.xAxis(:categories => total_array_year_month)
-           f.yAxis(:max => 200,:title =>{:text=>"hours"})
+           f.yAxis(:max => 50,:title =>{:text=>"hours"})
            f.options[:chart][:defaultSeriesType] = "column"
            f.plot_options({:column=>{:stacking=>"normal"}})
            f.options[:user] = user
