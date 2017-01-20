@@ -16,7 +16,7 @@
 <td><%= "タグワード" %></td>
 <td><%= "タグの説明" %></td>
 </tr>
-<% user.tags.each do |tag|%>
+<% user.tags.where.not(name:["other"]).each do |tag|%>
 <tr>
 <td><%= tag.name %></td>
 <td><%= tag.description %></td>
