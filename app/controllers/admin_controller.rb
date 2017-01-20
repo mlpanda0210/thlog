@@ -3,7 +3,7 @@ class AdminController < ApplicationController
 
   def admin_index_users
     @users = User.all
-    @tags = Tag.where.not(name: "other")
+    @tags = Tag.where.not(name:["other"])
   end
 
   def admin_update_schedule
