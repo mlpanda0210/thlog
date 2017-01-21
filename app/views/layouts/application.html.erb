@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Gcale</title>
-  <%= stylesheet_link_tag    'application', media: 'all' %>
-  <%= javascript_include_tag 'application' %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <script
+  src="http://code.jquery.com/jquery-3.1.1.js"
+  integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+  crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -12,44 +18,46 @@
 
     <div class="navi">
       <ul class="head">
-      <li class="icon"><%= link_to image_tag('gcals-logo.png', { :size => '80x90', :alt => 'gcals'}), root_path %></li>
+      <li class="icon"><%= link_to image_tag('gcals_logo.png', { :size => '100x120', :alt => 'gcals'}), root_path %></li>
       </ul>
     </div>
 
-    <nav class="navbar navbar-default">
-    	<div class="container-fluid">
-    		<div class="navbar-header">
-    			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarEexample1">
-    				<span class="sr-only">Toggle navigation</span>
-    				<span class="icon-bar"></span>
-    				<span class="icon-bar"></span>
-    				<span class="icon-bar"></span>
-    			</button>
-    		</div>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
 
-    			<ul class="nav nav-tabs nav-justified">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
     <% if admin_signed_in? %>
-      <li class="active"><%= link_to 'ADMIN_INDEX', admin_admin_index_path %></li>
-      <li><%= link_to 'MEMBERS', admin_admin_index_users_path %></li>
-      <li><%= link_to 'MEMBERS SEARCH', admin_admin_search_user_path %></li>
-      <li><%= link_to 'MEMBERS WORKING HOURS', admin_admin_comparison_working_time_path %></li>
-      <li><%= link_to 'MEMBERS PROJECT MANHOUR RATE', admin_admin_comparison_project_path %></li>
-      <li><%= link_to 'CUSTOM MEMBERS WORKING HOURS', admin_admin_custom_comparison_working_time_path %></li>
-      <li><%= link_to 'CUSTOM MEMBERS PROJECT MANHOUR RATE', admin_admin_custom_comparison_project_path %></li>
-      <li><%= link_to 'LOGOUT', destroy_admin_session_path, method: :delete %></li>
+      <li class="<%= 'active' if current_page?(admin_admin_index_path) %>"><%= link_to 'ADMIN_INDEX /', admin_admin_index_path %></li>
+      <li class="<%= 'active' if current_page?(admin_admin_index_users_path) %>"><%= link_to 'MEMBERS /', admin_admin_index_users_path %></li>
+      <li class="<%= 'active' if current_page?(admin_admin_search_user_path) %>"><%= link_to 'MEMBERS SEARCH /', admin_admin_search_user_path %></li>
+      <li class="<%= 'active' if current_page?(admin_admin_comparison_working_time_path) %>"><%= link_to 'MEMBERS WORKING HOURS /', admin_admin_comparison_working_time_path %></li>
+      <li class="<%= 'active' if current_page?(admin_admin_comparison_project_path) %>"><%= link_to 'MEMBERS PROJECT MANHOUR RATE /', admin_admin_comparison_project_path %></li>
+      <li class="<%= 'active' if current_page?(admin_admin_custom_comparison_working_time_path) %>"><%= link_to 'CUSTOM MEMBERS WORKING HOURS /', admin_admin_custom_comparison_working_time_path %></li>
+      <li class="<%= 'active' if current_page?(admin_admin_custom_comparison_project_path) %>"><%= link_to 'CUSTOM MEMBERS PROJECT MANHOUR RATE /', admin_admin_custom_comparison_project_path %></li>
+      <li class="<%= 'active' if current_page?(destroy_admin_session_path) %>"><%= link_to 'LOGOUT', destroy_admin_session_path, method: :delete %></li>
     <% elsif user_signed_in? %>
-      <li class="active"><%= link_to 'MY HOME', gcales_path %></li>
-      <li><%= link_to 'WORKING HOURS', gcales_index_month_working_hours_path %></li>
-    　<li><%= link_to 'PROJECT MANHOUR RATE', gcales_index_month_project_path %></li>
-      <li><%= link_to 'LOGOUT', destroy_user_session_path, method: :delete %></li>
+      <li class="<%= 'active' if current_page?(gcales_path) %>"><%= link_to 'MY HOME /', gcales_path %></li>
+      <li class="<%= 'active' if current_page?(gcales_index_month_working_hours_path) %>"><%= link_to 'WORKING HOURS /', gcales_index_month_working_hours_path %></li>
+    　<li class="<%= 'active' if current_page?(gcales_index_month_project_path) %>"><%= link_to 'PROJECT MANHOUR RATE /', gcales_index_month_project_path %></li>
+      <li class="<%= 'active' if current_page?(destroy_user_session_path) %>"><%= link_to 'LOGOUT', destroy_user_session_path, method: :delete %></li>
     <% else %>
-      <li><%= link_to 'LOGIN', new_user_session_path  %></li>
-      <li><%= link_to 'ADMIN_LOGIN', new_admin_session_path  %></li>
+      <li class="<%= 'active' if current_page?(new_user_session_path) %>"><%= link_to 'LOGIN /', new_user_session_path  %></li>
+      <li class="<%= 'active' if current_page?(new_admin_session_path) %>"><%= link_to 'ADMIN_LOGIN', new_admin_session_path  %></li>
     <% end %>
-    			</ul>
-    	</div>
-    </nav>
-  </header>
+  </ul>
+</div><!-- /.navbar-collapse -->
+</div><!-- /.container-fluid -->
+</nav>
+</header>
 
 <%= yield %>
 
