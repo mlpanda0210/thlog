@@ -1,21 +1,22 @@
 <div class="container">
   <div class="wrapper col-md-8 col-md-offset-2 col-sm-10">
-<br>
-<p>勤務時間の長いユーザーを検索する</p>
+<section class="search1">
+<h4 style="font-weight: 900; border-left: inset 10px #FD5A2A;">勤務時間の長いユーザーを検索する</h4><br>
 <%= form_for(:input,url: admin_admin_result_search_user_by_working_time_path) do |f|%>
 <div class="field">
   <p><%= f.label :"対象月を選択" %>
   <%= f.date_select :yearmonth, {:discard_day => true,:use_month_numbers => true,:default => Date.today.last_month,:date_separator => '年'}%>月</p>
   <p><%= f.label :"時間を入力" %>
-  <%= f.number_field :time %>時間</p>
+  <%= f.number_field :time %> 時間</p>
 </div>
 <div class="actions">
-  <%= f.submit "検索する" ,class: 'btn btn-default center-block btn-sm btn-success' %>
+  <%= f.submit "検索する" ,class: 'btn btn-default center-block btn-sm btn-primary' %>
 </div>
 <% end %>
-<br>
 
-<p>プロジェクトや行動単位で勤務時間の長いユーザーを検索する</p>
+</section>
+<section class="search2">
+<h4 style="font-weight: 900; border-left: inset 10px #FD5A2A;">プロジェクト単位で勤務時間の長いユーザーを検索する</h4><br>
 <%= form_for(:input,url: admin_admin_result_search_user_by_project_path) do |f|%>
 <div class="field">
   <p><%= f.label :"対象月を選択" %>
@@ -23,17 +24,15 @@
   <p><%= f.label :"対象プロジェクトを選択" %>
   <%= f.collection_select :name,@grouped_all_tags,:name, :name, class:"form-control" %></p>
   <p><%= f.label :"時間を入力" %>
-  <%= f.number_field :time %>時間</p>
+  <%= f.number_field :time %> 時間</p>
 </div>
-
   <div class="actions">
-    <%= f.submit "検索する" ,class: 'btn btn-default center-block btn-sm btn-success' %>
+    <%= f.submit "検索する" ,class: 'btn btn-default center-block btn-sm btn-primary' %>
   </div>
 <% end %>
-
+</section>
 <br>
-<br>
-<p>対象ユーザー一覧</p>
+<h4 style="border-bottom-style: dotted; border-top-style: dotted; padding: 10px;"><b>対象ユーザー一覧</b></h4>
 <br>
 <% @users.each do |user|%>
 <div class="target">

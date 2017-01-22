@@ -18,37 +18,47 @@ header {
    margin:0;
    padding:0;
    width: 100%;
+   background-image: url("haikei.png");
+
 }
 
+#bs-example-navbar-collapse-1 {
+  position: relative;
+  overflow: hidden;
+}
+
+#bs-example-navbar-collapse-1 ul {
+  position: relative;
+  left: 50%; /* リスト全体であるul要素を右に50%移動。つまり先頭を中央に持ってくる感じです。 */
+  float: left;
+}
+
+#bs-example-navbar-collapse-1 ul li {
+  position: relative;
+  left: -50%; /* 各リスト項目になるli要素を左に50%移動。 */
+  float: left;
+  list-style: none; /* 項目にぼっちを出したくない場合はこれを設定（今回はあんまり関係ないですが） */
+}
+.head {
+  padding: 0;
+}
 
 .icon{
   list-style: none;
-  padding: 15px 0 0 0;
+  padding: 10px 0 0 0;
   float :left;
   width: 100%;
-  margin: 0 0 0 -1.4em;
 }
 
-.nav-justified {
-    display: table;
-    table-layout: fixed;
-    width: 100%;
-}
-.navbar .nav-justified > li {
-    display: table-cell;
-    width: 100%;
-}
-
-.navbar-default {
+.navbar-inverse {
     border: 0;
     padding: 5px 25px;
 }
 .navbar {
-    background-color: transparent;
     color: white;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
 }
-.navbar-default {
+.navbar-inverse {
   .navbar-brand {
     color: #ccc;
     &:hover {
@@ -71,20 +81,21 @@ header {
   }
 }
 @media (max-width: 767px) {
-.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+.navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
     color: #ccc;
     text-align: center;
     &:hover, &:focus {
       color: white;
     }
   }
-  .navbar-default .navbar-toggle {
+  .navbar-inverse .navbar-toggle {
     background-color: transparent;
     &:hover, &:focus {
       background-color: transparent;
     }
   }
 }
+
 
 header ul:after {
   content: "";
@@ -105,4 +116,15 @@ body {
   padding:0;
   width: 100%;
   text-align: center;
+  background-image: url(background018_l.jpg);
+  background-position:center top;
+  background-repeat:no-repeat;
+  -moz-background-size:cover;
+  background-size:cover;
+}
+
+input , select {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 5px;
 }
