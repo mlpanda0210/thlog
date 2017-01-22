@@ -126,7 +126,7 @@ def index_month_working_hours
         end
         f.options[:subtitle] = @year.to_s+'年'+@month.to_s+"月for"+current_user.id.to_s
         f.xAxis(:categories => total_array_year_month)
-        f.yAxis(:max => 200,:title =>{:text=>"hours"})
+        f.yAxis(:max => 50,:title =>{:text=>"hours"})
         f.options[:chart][:defaultSeriesType] = "column"
         f.plot_options({:column=>{:stacking=>"normal"}})
         f.options[:user] = current_user

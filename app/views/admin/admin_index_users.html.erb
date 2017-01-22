@@ -11,18 +11,21 @@
 
 <div class="table-responsive">
 <table class="table">
-<p class="member">登録タグ一覧</p>
+<p class="member"><b>登録タグ一覧</b></p>
 <tr>
-<td><%= "タグワード" %></td>
-<td><%= "タグの説明" %></td>
+<td><b><%= "タグワード" %></b></td>
+<td><b><%= "タグの説明" %></b></td>
 </tr>
-<% user.tags.each do |tag|%>
+<% user.tags.where.not(name:["other"]).each do |tag|%>
 <tr>
 <td><%= tag.name %></td>
 <td><%= tag.description %></td>
 <% end %>
 </tr>
 </table>
+<br>
+<br>
+<p>-- END --</p>
 </div>
 </div>
 <% end %>

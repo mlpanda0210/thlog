@@ -8,10 +8,10 @@
 </div>
 <div class="table-responsive">
 <table class="table">
-<p>登録タグ一覧</p>
+<p><b>登録タグ一覧</b></p>
 <tr>
-<td><%= "タグネーム" %></td>
-<td><%= "タグの説明" %></td>
+<td><b><%= "タグネーム" %></b></td>
+<td><b><%= "タグの説明" %></b></td>
 <td colspan="2"></td>
 </tr>
 
@@ -26,7 +26,7 @@
 </table>
 </div>
 <div class="btn">
-<p><%= link_to 'タグを新規登録する' ,admin_admin_new_tag_path, class: 'btn btn-default btn-sm btn-default' %></p>
-<p><%= link_to "メンバーのスケジュールを更新する", admin_admin_update_schedule_path, class: 'btn btn-default btn-sm btn-default' %></p>
+<p class="btnschedule"><%= link_to 'タグを新規登録する' ,admin_admin_new_tag_path, class: 'btn btn-success btn-sm btn-default' %></p>
+<p class="btnschedule"><%= link_to "メンバーのスケジュールを更新する", admin_admin_update_schedule_path, class: 'btn btn-success btn-sm btn-default' %></p>
 </div>
 </div>

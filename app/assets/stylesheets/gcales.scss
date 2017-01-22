@@ -3,6 +3,10 @@ table.table th{
   border-left: 3px solid #369;
 }
 
+.table tr:nth-child(1) td {
+  background-color :#c0c0c0;
+}
+
 td {
 text-align: left;
 vertical-align: top;
@@ -35,6 +39,14 @@ img.profileimg {
 
 .tag-field{
   padding-bottom: 5px;
+}
+
+.btnschedule {
+  display: inline;
+}
+
+.tagnm .tagdc {
+  background-color: white;
 }
 
 .search1 {
