@@ -8,14 +8,14 @@ class AdminController < ApplicationController
 
   def admin_update_schedule
     Schedule.copy_user_schedules
-    redirect_to admin_admin_index_path, notice: "メンバーのスケジュールを登録しました"
+    redirect_to admin_admin_index_path, notice: "メンバーのスケジュールを登録しました!"
   end
 
   def admin_show_user
     @pie_graphs=[]
     @column_graphs=[]
     @user = User.find(params[:id])
-    for num in 1..2 do
+    for num in 0..1 do
       @year = (Date.today << num).year
       @month = (Date.today << num).month
       @schedules =  Schedule.where(year: @year,month: @month).where(user_id: @user.id)
@@ -41,7 +41,7 @@ class AdminController < ApplicationController
     total_sum_time_tag = []
     total_sum_time_tag2 = []
     total_array_year_month = []
-    for num in 1..5 do
+    for num in 0..4 do
       @year = (Date.today << num).year
       @month = (Date.today << num).month
       year_month = @year.to_s+'年'+@month.to_s+"月"
@@ -141,7 +141,7 @@ class AdminController < ApplicationController
       total_sum_time_tag = []
       total_sum_time_tag2 = []
       total_array_year_month = []
-      for num in 1..5 do
+      for num in 0..4 do
         @year = (Date.today << num).year
         @month = (Date.today << num).month
         year_month = @year.to_s+'年'+@month.to_s+"月"
@@ -186,7 +186,7 @@ class AdminController < ApplicationController
      @users = User.all
      @graphs = []
      @users.each do |user|
-       for num in 1..2 do
+       for num in 0..1 do
          @year = (Date.today << num).year
          @month = (Date.today << num).month
          @schedules =  Schedule.where(year: @year,month: @month).where(user_id: user.id)
@@ -251,7 +251,7 @@ class AdminController < ApplicationController
        total_sum_time_tag = []
        total_sum_time_tag2 = []
        total_array_year_month = []
-       for num in 1..5 do
+       for num in 0..4 do
          @year = (Date.today << num).year
          @month = (Date.today << num).month
          year_month = @year.to_s+'年'+@month.to_s+"月"
@@ -296,7 +296,7 @@ class AdminController < ApplicationController
      @users = User.all
      @graphs = []
      @users.each do |user|
-       for num in 1..2 do
+       for num in 0..1 do
          @year = (Date.today << num).year
          @month = (Date.today << num).month
          @schedules = AdminSchedule.where(year: @year,month: @month).where(user_id: user.id)

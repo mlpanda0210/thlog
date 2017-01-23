@@ -90,6 +90,7 @@ gem 'rmail', '~> 1.1'
 gem 'nested_form'
 
 gem 'lazy_high_charts'
+gem 'ransack'
 
 
 group :development do

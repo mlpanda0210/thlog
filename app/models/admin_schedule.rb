@@ -3,8 +3,10 @@ class AdminSchedule < ActiveRecord::Base
   def self.add_admin_tag_id(user_id,admin_id)
     tags = AdminTag.where(user_id: admin_id).where.not(name:["other"])
     tags.each do |tag|
-     schedules = self.where("summary ilike '%"+tag.name+"%'")
-     schedules.update_all(tag_id: tag.id)
+      tag_array = []
+      tag_array = tag.name.split
+      schedules = self.ransack(summary_cont_any: tag_array).result
+      schedules.update_all(tag_id: tag.id)
    end
    schedules = self.all.where(user_id: user_id)
    schedules.each do |s|
