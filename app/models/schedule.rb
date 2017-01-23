@@ -6,8 +6,10 @@ class Schedule < ActiveRecord::Base
   def self.add_tag_id(user_id)
     tags = Tag.where.not(name:["other"]).where(user_id: user_id)
     tags.each do |tag|
-     schedules = self.where("summary ilike '%"+tag.name+"%'")
-     schedules.update_all(tag_id: tag.id)
+      tag_array = []
+      tag_array = tag.name.split
+      schedules = self.ransack(summary_cont_any: tag_array).result
+      schedules.update_all(tag_id: tag.id)
    end
    schedules = self.all.where(user_id: user_id)
    schedules.each do |s|

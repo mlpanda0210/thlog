@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
     if admin_signed_in?
       admin_admin_index_path
     else
+      Tag.find_or_create_by(name: "other",description: "その他", user_id: current_user.id)
       gcales_path
     end
   end

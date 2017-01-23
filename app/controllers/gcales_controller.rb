@@ -17,6 +17,8 @@ class GcalesController < ApplicationController
   @responses = client.execute(
   :api_method => service.events.list,
   :parameters => {'calendarId' => 'primary',
+    'timeMin'=> (Time.now - 6.months).iso8601,
+    'timeMax'=> (Time.now + 1.months).iso8601,
     'maxResults' => 2500},
   :headers => {'Content-Type' => 'application/json'})
   events = []
@@ -39,7 +41,7 @@ class GcalesController < ApplicationController
       @schedule_year_month.spendtime = (@schedule_year_month.endtime-@schedule_year_month.starttime)/3600
       @schedule_year_month.save
     end
-    redirect_to gcales_path, notice: "スケジュールを登録しました"
+    redirect_to gcales_path, notice: "スケジュールを登録しました!"
   end
 
   def index
@@ -50,7 +52,7 @@ class GcalesController < ApplicationController
     Day.delete_all
     @graphs=[]
     @user = current_user
-    for num in 1..10 do
+    for num in 0..5 do
       @year = (Date.today << num).year
       @month = (Date.today << num).month
       @schedules =  Schedule.where(year: @year,month: @month).where(user_id: current_user.id)
@@ -94,7 +96,7 @@ def index_month_working_hours
     total_sum_time_tag = []
     total_sum_time_tag2 = []
     total_array_year_month = []
-    for num in 1..5 do
+    for num in 0..4 do
       @year = (Date.today << num).year
       @month = (Date.today << num).month
       year_month = @year.to_s+'年'+@month.to_s+"月"
@@ -126,7 +128,7 @@ def index_month_working_hours
         end
         f.options[:subtitle] = @year.to_s+'年'+@month.to_s+"月for"+current_user.id.to_s
         f.xAxis(:categories => total_array_year_month)
-        f.yAxis(:max => 50,:title =>{:text=>"hours"})
+        f.yAxis(:title =>{:text=>"hours"})
         f.options[:chart][:defaultSeriesType] = "column"
         f.plot_options({:column=>{:stacking=>"normal"}})
         f.options[:user] = current_user

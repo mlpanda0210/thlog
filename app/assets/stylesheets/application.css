@@ -116,7 +116,7 @@ body {
   padding:0;
   width: 100%;
   text-align: center;
-  background-image: url(background018_l.jpg);
+  /*background-image: url(background018_l.jpg);*/
   background-position:center top;
   background-repeat:no-repeat;
   -moz-background-size:cover;

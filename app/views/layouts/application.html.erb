@@ -14,7 +14,7 @@
 
     <div class="navi">
       <ul class="head">
-      <li class="icon"><%= link_to image_tag('gcals_logo.png', { :size => '100x120', :alt => 'gcals'}), root_path %></li>
+      <!-- <li class="icon"><%= link_to image_tag('gcals_logo.png', { :size => '100x120', :alt => 'gcals'}), root_path %></li> -->
       </ul>
     </div>
 
@@ -47,7 +47,7 @@
       <li class="<%= 'active' if current_page?(destroy_user_session_path) %>"><%= link_to 'LOGOUT', destroy_user_session_path, method: :delete %></li>
     <% else %>
       <li class="<%= 'active' if current_page?(new_user_session_path) %>"><%= link_to 'LOGIN /', new_user_session_path  %></li>
-      <li class="<%= 'active' if current_page?(new_admin_session_path) %>"><%= link_to 'ADMIN_LOGIN', new_admin_session_path  %></li>
+      <!-- <li class="<%= 'active' if current_page?(new_admin_session_path) %>"><%= link_to 'ADMIN_LOGIN', new_admin_session_path  %></li> -->
     <% end %>
   </ul>
 </div><!-- /.navbar-collapse -->
