@@ -168,6 +168,13 @@ def index_month_working_hours
    redirect_to gcales_path,  notice: "タグを編集しました"
  end
 
+ def download_manual
+  file_name="Manual.pdf"
+  filepath = Rails.root.join('public',file_name)
+  stat = File::stat(filepath)
+  send_file(filepath, :filename => file_name, :length => stat.size)
+end
+
  private
  def searches_params
    params.require(:form_search).permit(Form::Search::REGISTRABLE_ATTRIBUTES)

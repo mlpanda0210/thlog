@@ -46,6 +46,7 @@ patch 'gcales/update_tag' => 'gcales#update_tag'
 get 'gcales/index_month_project' => 'gcales#index_month_project'
 get 'gcales/show_month_project' => 'gcales#show_month_project'
 get 'gcales/index_month_working_hours' => 'gcales#index_month_working_hours'
+get 'gcales/download_manual' => 'gcales#download_manual'
 get 'gcales/day' => 'gcales#day'
 root'gcales#index'
 
