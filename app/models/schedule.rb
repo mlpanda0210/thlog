@@ -4,6 +4,7 @@ class Schedule < ActiveRecord::Base
   belongs_to :day
 
   def self.add_tag_id(user_id)
+    self.where(user_id: user_id).update_all(tag_id: nil)
     tags = Tag.where.not(name:["other"]).where(user_id: user_id)
     tags.each do |tag|
       tag_array = []
