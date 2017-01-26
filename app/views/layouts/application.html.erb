@@ -44,8 +44,7 @@
       <li class="<%= 'active' if current_page?(gcales_path) %>"><%= link_to 'MY HOME /', gcales_path %></li>
       <li class="<%= 'active' if current_page?(gcales_index_month_working_hours_path) %>"><%= link_to 'WORKING HOURS /', gcales_index_month_working_hours_path %></li>
     　<li class="<%= 'active' if current_page?(gcales_index_month_project_path) %>"><%= link_to 'PROJECT MANHOUR RATE /', gcales_index_month_project_path %></li>
-     <li class="<%= 'active' if current_page?(gcales_download_manual_path)%>"><%= link_to "MANUAL DOWNLOAD",{:controller => "gcales",:action=>"download_manual"} %></li>
-
+      <li class="<%= 'active' if current_page?(gcales_download_manual_path)%>"><%= link_to "MANUAL DOWNLOAD",{:controller => "gcales",:action=>"download_manual"} %></li>
       <li class="<%= 'active' if current_page?(destroy_user_session_path) %>"><%= link_to 'LOGOUT', destroy_user_session_path, method: :delete %></li>
     <% else %>
       <li class="<%= 'active' if current_page?(new_user_session_path) %>"><%= link_to 'LOGIN /', new_user_session_path  %></li>
