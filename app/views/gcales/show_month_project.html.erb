@@ -10,7 +10,8 @@
   <tr>
   <td>予定名：　<%= s.summary %></td>
   <td>所用時間：　<%= s.spendtime %>時間</td>
-  <td>時間：　　<%= s.starttime %>　〜　<%= s.endtime %></td>
+  <td>時間帯：　　<%= s.starttime.strftime('%Y/%m/%d  %H:%M:%S') %>　〜　<%= s.endtime.strftime('%Y/%m/%d  %H:%M:%S') %></td>
+  <td><%=link_to "予定名を編集",gcales_edit_schedule_contents_path(:id => s.id),class: 'btn btn-default btn-sm btn btn-primary' %></td>
   </tr>
   <% end %>
   <br>

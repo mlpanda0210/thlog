@@ -30,7 +30,8 @@ class GcalesController < ApplicationController
       next
     end
       @schedule_year_month = Schedule.new
-      @schedule_year_month.user_id=current_user.id
+      @schedule_year_month.event_id = event["id"]
+      @schedule_year_month.user_id = current_user.id
       @schedule_year_month.summary = event["summary"]
       @schedule_year_month.description = event["description"]
       @schedule_year_month.starttime = event["start"]["dateTime"]
@@ -173,6 +174,22 @@ def index_month_working_hours
   filepath = Rails.root.join('public',file_name)
   stat = File::stat(filepath)
   send_file(filepath, :filename => file_name, :length => stat.size)
+end
+
+def edit_schedule_contents
+  @schedule = Schedule.find(params[:id])
+end
+
+def update_schedule_contents
+  schedule = params[:schedule]
+  Schedule.update_events(current_user,schedule)
+  schedule_db = Schedule.find_by(event_id: schedule[:event_id])
+  @year = schedule_db.year.to_s
+  @month =  schedule_db.month.to_s
+  @schedules =  Schedule.where(year: @year,month: @month).where(user_id: current_user.id)
+  @schedules.add_tag_id(current_user.id)
+  graph = @year + '年' + @month + '月'
+  redirect_to gcales_show_month_project_path(graph: graph)
 end
 
  private

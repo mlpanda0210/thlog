@@ -12,8 +12,7 @@ class CreateSchedules < ActiveRecord::Migration
       t.integer :year
       t.integer :month
       t.integer :day_month
-
-
+      t.string :event_id
       t.timestamps null: false
     end
   end
