@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="wrapper col-md-8 col-md-offset-2 col-sm-10">
+    <%= form_for(@schedule, url: gcales_update_schedule_contents_path(:schedule => @schedule)) do |f| %>
+    <%= f.label "予定名" %>
+    <%= f.text_field :summary, class: 'form-control' %>
+    <br>
+    <%= f.label "所用時間" %>
+    <%= f.hidden_field :spendtime %>
+    <%= @schedule.spendtime%>時間
+    <br>
+    <%= f.label "時間帯" %>
+    <%= f.hidden_field :starttime , class: 'form-control' %>
+    <%= f.hidden_field :endtime , class: 'form-control' %>
+    <%= @schedule.starttime.strftime('%Y年%m月%d日 %H:%M:%S')%> 〜 <%= @schedule.endtime.strftime('%Y年%m月%d日 %H:%M:%S')%>
+    <br>
+    <%= f.submit "更新する",class: 'btn btn-primary btn-block' %>
+    <% end %>
+  </div>
+</div>

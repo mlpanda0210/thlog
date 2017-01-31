@@ -25,12 +25,14 @@ class GcalesController < ApplicationController
   @responses.data.items.each do |item|
     events << item
   end
+  binding.pry
   events.each do |event|
     if event.summary.nil? || event["start"]["dateTime"].nil? then
       next
     end
       @schedule_year_month = Schedule.new
-      @schedule_year_month.user_id=current_user.id
+      @schedule_year_month.event_id = event["id"]
+      @schedule_year_month.user_id = current_user.id
       @schedule_year_month.summary = event["summary"]
       @schedule_year_month.description = event["description"]
       @schedule_year_month.starttime = event["start"]["dateTime"]
@@ -173,6 +175,15 @@ def index_month_working_hours
   filepath = Rails.root.join('public',file_name)
   stat = File::stat(filepath)
   send_file(filepath, :filename => file_name, :length => stat.size)
+end
+
+def edit_schedule_contents
+  @schedule = Schedule.find(params[:id])
+  binding.pry
+end
+
+def update_schedule_contents
+  Schedule.get_events(current_user)
 end
 
  private

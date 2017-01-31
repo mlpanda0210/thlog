@@ -3,12 +3,32 @@ class Schedule < ActiveRecord::Base
   belongs_to :tag
   belongs_to :day
 
+  def self.get_events(user)
+    client = Google::APIClient.new
+    client.authorization.access_token = user.token
+    client.authorization.client_id = ENV['GOOGLE_CLIENT_ID']
+    client.authorization.client_secret = ENV['GOOGLE_CLIENT_SECRET']
+    client.authorization.refresh_token = user.refresh_token
+    service = client.discovered_api('calendar', 'v3')
+    params = {'calendarId' => 'primary','eventId' => 'inncnmlsustleq83tbqsl74h4s'}
+    event = {'summary' => 'Board of Directors MeetingAAAAAAA','start' => {'dateTime' => '2017-01-02T10:25:00.000-07:00'},
+      'end' => {'dateTime' => '2017-01-03T10:25:00.000-07:00'}}
+    result = client.execute(:api_method => service.events.update,:parameters => params,:body_object => event)
+  end
+
+
+
   def self.add_tag_id(user_id)
     self.where(user_id: user_id).update_all(tag_id: nil)
     tags = Tag.where.not(name:["other"]).where(user_id: user_id)
     tags.each do |tag|
       tag_array = []
-      tag_array = tag.name.split
+      if tag.name.include?("　")
+        tag.name = tag.name.gsub("　"," ")
+        binding.pry
+      end
+      tag_array = tag.name.strip.split
+      binding.pry
       schedules = self.ransack(summary_cont_any: tag_array).result
       schedules.update_all(tag_id: tag.id)
    end

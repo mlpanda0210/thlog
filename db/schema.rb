@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 20170113074705) do
     t.integer  "year"
     t.integer  "month"
     t.integer  "day_month"
+    t.string   "event_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
