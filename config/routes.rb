@@ -48,7 +48,7 @@ get 'gcales/show_month_project' => 'gcales#show_month_project'
 get 'gcales/index_month_working_hours' => 'gcales#index_month_working_hours'
 get 'gcales/download_manual' => 'gcales#download_manual'
 get 'gcales/edit_schedule_contents' => 'gcales#edit_schedule_contents'
-get 'gcales/update_schedule_contents' => 'gcales#update_schedule_contents'
+patch 'gcales/update_schedule_contents' => 'gcales#update_schedule_contents'
 get 'gcales/day' => 'gcales#day'
 root'gcales#index'
 

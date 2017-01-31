@@ -3,17 +3,19 @@ class Schedule < ActiveRecord::Base
   belongs_to :tag
   belongs_to :day
 
-  def self.get_events(user)
+  def self.update_events(user,schedule)
     client = Google::APIClient.new
     client.authorization.access_token = user.token
     client.authorization.client_id = ENV['GOOGLE_CLIENT_ID']
     client.authorization.client_secret = ENV['GOOGLE_CLIENT_SECRET']
     client.authorization.refresh_token = user.refresh_token
     service = client.discovered_api('calendar', 'v3')
-    params = {'calendarId' => 'primary','eventId' => 'inncnmlsustleq83tbqsl74h4s'}
-    event = {'summary' => 'Board of Directors MeetingAAAAAAA','start' => {'dateTime' => '2017-01-02T10:25:00.000-07:00'},
-      'end' => {'dateTime' => '2017-01-03T10:25:00.000-07:00'}}
+    params = {'calendarId' => 'primary','eventId' => schedule[:event_id]}
+
+    event = {'summary' => schedule[:summary],'start' => {'dateTime' => schedule[:starttime].to_datetime},'end' => {'dateTime' => schedule[:endtime].to_datetime}}
     result = client.execute(:api_method => service.events.update,:parameters => params,:body_object => event)
+    schedule_db = self.find_by(event_id: schedule[:event_id])
+    schedule_db.update(summary: schedule[:summary])
   end
 
 
@@ -25,10 +27,8 @@ class Schedule < ActiveRecord::Base
       tag_array = []
       if tag.name.include?("　")
         tag.name = tag.name.gsub("　"," ")
-        binding.pry
       end
       tag_array = tag.name.strip.split
-      binding.pry
       schedules = self.ransack(summary_cont_any: tag_array).result
       schedules.update_all(tag_id: tag.id)
    end

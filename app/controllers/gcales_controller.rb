@@ -25,7 +25,6 @@ class GcalesController < ApplicationController
   @responses.data.items.each do |item|
     events << item
   end
-  binding.pry
   events.each do |event|
     if event.summary.nil? || event["start"]["dateTime"].nil? then
       next
@@ -179,11 +178,18 @@ end
 
 def edit_schedule_contents
   @schedule = Schedule.find(params[:id])
-  binding.pry
 end
 
 def update_schedule_contents
-  Schedule.get_events(current_user)
+  schedule = params[:schedule]
+  Schedule.update_events(current_user,schedule)
+  schedule_db = Schedule.find_by(event_id: schedule[:event_id])
+  @year = schedule_db.year.to_s
+  @month =  schedule_db.month.to_s
+  @schedules =  Schedule.where(year: @year,month: @month).where(user_id: current_user.id)
+  @schedules.add_tag_id(current_user.id)
+  graph = @year + '年' + @month + '月'
+  redirect_to gcales_show_month_project_path(graph: graph)
 end
 
  private
