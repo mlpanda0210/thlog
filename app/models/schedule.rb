@@ -8,7 +8,10 @@ class Schedule < ActiveRecord::Base
     tags = Tag.where.not(name:["other"]).where(user_id: user_id)
     tags.each do |tag|
       tag_array = []
-      tag_array = tag.name.split
+      if tag.name.include?("　")
+        tag.name = tag.name.gsub("　"," ")
+      end
+      tag_array = tag.name.strip.split
       schedules = self.ransack(summary_cont_any: tag_array).result
       schedules.update_all(tag_id: tag.id)
    end
