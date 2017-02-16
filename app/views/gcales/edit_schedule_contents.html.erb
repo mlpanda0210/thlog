@@ -3,6 +3,8 @@
     <%= form_for(@schedule, url: gcales_update_schedule_contents_path) do |f| %>
     <%= f.label "予定名" %>
     <%= f.text_field :summary, class: 'form-control' %>
+    <%= f.label "予定内容" %>
+    <%= f.text_area :description, class: 'form-control' ,size: "100x10"%>
     <br>
     <%= f.label "所用時間" %>
     <%= f.hidden_field :spendtime %>
@@ -11,7 +13,7 @@
     <%= f.label "時間帯" %>
     <%= f.hidden_field :starttime , class: 'form-control' %>
     <%= f.hidden_field :endtime , class: 'form-control' %>
-    <p><%= @schedule.starttime.strftime('%Y年%m月%d日 %H:%M:%S')%> 〜 <%= @schedule.endtime.strftime('%Y年%m月%d日 %H:%M:%S')%></p>
+    <p><%= @schedule.starttime.strftime('%Y年%m月%d日 %H:%M')%> 〜 <%= @schedule.endtime.strftime('%Y年%m月%d日 %H:%M')%></p>
     <%= f.hidden_field :event_id , class: 'form-control' %>
     <br>
     <%= f.submit "更新する",class: 'btn btn-primary btn-block' %>
