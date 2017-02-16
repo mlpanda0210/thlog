@@ -12,10 +12,10 @@ class Schedule < ActiveRecord::Base
     service = client.discovered_api('calendar', 'v3')
     params = {'calendarId' => 'primary','eventId' => schedule[:event_id]}
 
-    event = {'summary' => schedule[:summary],'start' => {'dateTime' => schedule[:starttime].to_datetime},'end' => {'dateTime' => schedule[:endtime].to_datetime}}
+    event = {'summary' => schedule[:summary],'description' => schedule[:description],'start' => {'dateTime' => schedule[:starttime].to_datetime},'end' => {'dateTime' => schedule[:endtime].to_datetime}}
     result = client.execute(:api_method => service.events.update,:parameters => params,:body_object => event)
     schedule_db = self.find_by(event_id: schedule[:event_id])
-    schedule_db.update(summary: schedule[:summary])
+    schedule_db.update(summary: schedule[:summary],description: schedule[:description])
   end
 
 
