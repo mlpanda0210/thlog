@@ -39,6 +39,7 @@ class GcalesController < ApplicationController
         end
         @schedule_year_month = Schedule.new
         @schedule_year_month.event_id = event["id"]
+        binding.pry
         @schedule_year_month.user_id = current_user.id
         @schedule_year_month.summary = event["summary"]
         @schedule_year_month.description = event["description"]
