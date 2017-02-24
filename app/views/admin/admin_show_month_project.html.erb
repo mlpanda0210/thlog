@@ -1,12 +1,28 @@
-<p><%=image_tag(@user.picture)%></p>
-<p>ユーザー：<%= @user.name %></p>
-<h1><%= @year %>年<%= @month %>月のプロジェクト工数一覧</h1>
+<p><%= link_to image_tag(@user.picture), gcales_path, :class => "profileimg" %></p>
+<h3><%= @year %>年<%= @month %>月のプロジェクト工数一覧</h3>
 <% @tags.each do |tag| %>
-  <h2><%= tag.description %></h2>
+<div class="table-responsive">
+<table class="table">
+  <tr>
+    <th colspan="3"><%= tag.description %></th>
+  </tr>
   <% @schedules.where(tag_id: tag.id).each do |s| %>
-  <p>予定名：　<%= s.summary %></p>
-  <p>所用時間：　<%= s.spendtime %>時間</p>
-  <p>時間：　　<%= s.starttime %>　〜　<%= s.endtime %></p>
-  <br>
+  <tr>
+  <td>予定名：　<%= s.summary %></td>
+  <td>予定内容：
+    <% if s.description.blank? then%>
+    入力なし
+    <% else %>
+    <font color="red">入力あり</font>
+    <% end %>
+  </td>
+  <td>所用時間：　<%= s.spendtime %>時間</td>
+  <td>時間帯：　　<%= s.starttime.strftime('%Y/%m/%d  %H:%M') %>　〜　<%= s.endtime.strftime('%Y/%m/%d  %H:%M') %></td>
+  <td><%=link_to "詳細・編集",admin_admin_edit_schedule_contents_path(:id => s.id),class: 'btn btn-default btn-sm btn btn-primary' %></td>
+  </tr>
   <% end %>
+  <br>
+  <br>
+</table>
+</div>
 <% end %>

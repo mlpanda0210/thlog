@@ -30,6 +30,11 @@
 <p><%= link_to 'タグを新規登録する' ,gcales_new_tag_path, class: 'btn btn-default btn-sm btn-default' %></p>
 </div>
 <div class="tagbtn">
-<p><%= link_to "スケジュールを更新する", gcales_update_schedule_path, class: 'btn btn-default btn-sm btn-default' %></p>
+<p><%= link_to "Googleカレンダーのスケジュールを読み込む", gcales_update_schedule_path, class: 'btn btn-default btn-sm btn-default' %></p>
+</div>
+<div class="table-responsive">
+<table class="table">
+<p>※スケジュールの予定に"業務外"、"プライベート"、"private"という文字が含まれたスケジュールは読み込まれません。</p>
+</table>
 </div>
 </div>

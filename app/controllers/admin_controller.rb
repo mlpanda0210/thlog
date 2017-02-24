@@ -71,7 +71,7 @@ class AdminController < ApplicationController
       end
       f.options[:subtitle] = @year.to_s+'年'+@month.to_s+"月for"+@user.id.to_s
       f.xAxis(:categories => total_array_year_month)
-      f.yAxis(:max => 50,:title =>{:text=>"hours"})
+      f.yAxis(:title =>{:text=>"hours"})
       f.options[:chart][:defaultSeriesType] = "column"
       f.plot_options({:column=>{:stacking=>"normal"}})
       f.options[:user] = @user
@@ -173,7 +173,7 @@ class AdminController < ApplicationController
           end
           f.options[:subtitle] = @year.to_s+'年'+@month.to_s+"月for"+user.id.to_s
           f.xAxis(:categories => total_array_year_month)
-          f.yAxis(:max => 50,:title =>{:text=>"hours"})
+          f.yAxis(:title =>{:text=>"hours"})
           f.options[:chart][:defaultSeriesType] = "column"
           f.plot_options({:column=>{:stacking=>"normal"}})
           f.options[:user] = user
@@ -334,6 +334,9 @@ class AdminController < ApplicationController
 
    end
 
+   def admin_edit_schedule_contents
+     @schedule = Schedule.find(params[:id])
+   end
 
 
     private

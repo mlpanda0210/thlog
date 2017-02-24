@@ -27,6 +27,7 @@ get 'admin/admin_comparison_working_time' => 'admin#admin_comparison_working_tim
 get 'admin/admin_custom_comparison_project' => 'admin#admin_custom_comparison_project'
 get 'admin/admin_custom_comparison_working_time' => 'admin#admin_custom_comparison_working_time'
 get 'admin/admin_custom_show_month_project' => 'admin#admin_custom_show_month_project'
+get 'admin/admin_edit_schedule_contents' => 'admin#admin_edit_schedule_contents'
 
 get 'admin/admin_index' => 'admin#admin_index'
 delete 'admin/index' => 'admin#admin_destroy_tag'
