@@ -6,6 +6,9 @@ class GcalesController < ApplicationController
     @tags = Tag.all
   end
 
+  def hogehoge
+  end
+
   def update_schedule
     Schedule.where(user_id: current_user.id).delete_all
     client = Google::APIClient.new
@@ -25,7 +28,9 @@ class GcalesController < ApplicationController
       @responses.data.items.each do |item|
         events << item
       end
+      binding.pry
       events.each do |event|
+
         if event.summary.nil? || event["start"]["dateTime"].nil? then
           next
         end
