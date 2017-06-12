@@ -1,5 +1,5 @@
 lock '3.6.0'
-set :application, 'gcals'
+set :application, 'thlog'
 set :repo_url, 'https://github.com/tachiken0210/thlog'
 set :branch, ENV['BRANCH'] || 'master'
 set :deploy_to, '/var/www/thlog'
