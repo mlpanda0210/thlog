@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: thlog_production
-  username: gcale
+  username: thlog
   password: <%= ENV['GCALE_DATABASE_PASSWORD'] %>
