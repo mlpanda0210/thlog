@@ -10,53 +10,9 @@ class GcalesController < ApplicationController
   end
 
   def update_schedule
-    Schedule.where(user_id: current_user.id).delete_all
-    client = Google::APIClient.new
-    client.authorization.access_token = current_user.token
-    client.authorization.client_id = ENV['GOOGLE_CLIENT_ID']
-    client.authorization.client_secret = ENV['GOOGLE_CLIENT_SECRET']
-    client.authorization.refresh_token = current_user.refresh_token
-    service = client.discovered_api('calendar', 'v3')
-    @responses = client.execute(
-    :api_method => service.events.list,
-    :parameters => {'calendarId' => 'primary',
-      'timeMin'=> (Time.now - 6.months).iso8601,
-      'timeMax'=> (Time.now + 1.months).iso8601,
-      'maxResults' => 2500},
-      :headers => {'Content-Type' => 'application/json'})
-      events = []
-      @responses.data.items.each do |item|
-        events << item
-      end
-      binding.pry
-      events.each do |event|
-
-        if event.summary.nil? || event["start"]["dateTime"].nil? then
-          next
-        end
-        if event.summary.include?("プライベート")||event.summary.include?("業務外")||event.summary.include?("private")then
-          next
-        end
-        if event["attendees"].present?  then
-          if event["attendees"].select{|a,b,c,d|a["email"] == current_user.email}[0]["responseStatus"] != "accepted"  then
-            next
-          end
-        end
-        @schedule_year_month = Schedule.new
-        @schedule_year_month.event_id = event["id"]
-        @schedule_year_month.user_id = current_user.id
-        @schedule_year_month.summary = event["summary"]
-        @schedule_year_month.description = event["description"]
-        @schedule_year_month.starttime = event["start"]["dateTime"]
-        @schedule_year_month.endtime = event["end"]["dateTime"]
-        @schedule_year_month.year = event["start"]["dateTime"].year.to_i
-        @schedule_year_month.month = event["start"]["dateTime"].month.to_i
-        @schedule_year_month.day_month = event["start"]["dateTime"].day.to_i
-        @schedule_year_month.spendtime = (@schedule_year_month.endtime-@schedule_year_month.starttime)/3600
-        @schedule_year_month.save
-      end
-      redirect_to gcales_path, notice: "スケジュールを登録しました!"
-    end
+    Schedule.update_schedule(current_user)
+    redirect_to gcales_path, notice: "スケジュールを登録しました!"
+  end
 
     def index
       @tags = Tag.where.not(name:["other"]).where(user_id: current_user.id).order(created_at: :desc)

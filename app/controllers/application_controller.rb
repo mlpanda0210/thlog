@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
       admin_admin_index_path
     else
       Tag.find_or_create_by(name: "other",description: "その他", user_id: current_user.id)
+      Schedule.update_schedule(current_user)
       gcales_path
     end
   end
